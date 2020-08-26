@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<!--
+  ~ Copyright ©  2020. Mantik Tech.  All rights reserved under CC BY-NC-SA 4.0 licence.
+  ~ See LICENSE file for more details.
+  ~ @link https://www.mantik.tech/
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<carriers>
+			<bluemail>
+				<model>Mantik\Bluemail\Model\Carrier\Bluemail</model>
+				<active>0</active>
+				<title>Bluemail</title>
+				<name>Bluemail</name>
+				<token/>
+				<specificerrmsg>- Working -</specificerrmsg>
+				<sallowspecific>0</sallowspecific>
+			</bluemail>
+		</carriers>
+	</default>
+</config>
