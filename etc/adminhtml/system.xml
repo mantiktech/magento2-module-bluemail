@@ -20,6 +20,9 @@
 				<field id="token" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="password">
 					<label>X-Midla-App-Token</label>
 				</field>
+				<field id="clientid" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="password">
+					<label>Client ID</label>
+				</field>
 				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="text">
 					<label>Sort Order</label>
 				</field>
