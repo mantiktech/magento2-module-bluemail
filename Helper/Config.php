@@ -27,7 +27,13 @@ class Config extends AbstractHelper
     const CONFIG_MODULE_ENABLED = self::SECTION . self::GROUP . 'active';
     const CONFIG_METHOD_NAME = self::SECTION . self::GROUP . 'name';
     const CONFIG_XAPP_TOKEN = self::SECTION . self::GROUP . 'token';
+    const CONFIG_CUSTOMER_ID = self::SECTION . self::GROUP . 'customerid';
     const CONFIG_COUNTRY_RESTRICTION = self::SECTION . self::GROUP . 'sallowspecific';
+
+    /**
+     * API Access Url
+     */
+    const BLUEMAIL_API_URL = 'https://api-test.bluemailbox.com.ar/v1/';
 
     /**
      * @param Context $context
@@ -43,7 +49,7 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    protected function isEnabled() {
+    public function isEnabled() {
         return $this->getConfigValue(self::CONFIG_MODULE_ENABLED);
     }
 
@@ -61,8 +67,17 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    protected function getAppToken() {
+    public function getAppToken() {
         return $this->getConfigValue(self::CONFIG_XAPP_TOKEN);
+    }
+
+    /**
+     * Get Bluemail Client ID
+     *
+     * @return mixed
+     */
+    public function getCustomerId() {
+        return $this->getConfigValue(self::CONFIG_CUSTOMER_ID);
     }
 
     /**
@@ -70,8 +85,12 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    protected function getCountryRestrictions() {
+    public function getCountryRestrictions() {
         return $this->getConfigValue(self::CONFIG_COUNTRY_RESTRICTION);
+    }
+
+    public function getApiUrl() {
+        return self::BLUEMAIL_API_URL;
     }
 
     /**

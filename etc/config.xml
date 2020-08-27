@@ -14,7 +14,7 @@
 				<title>Bluemail</title>
 				<name>Bluemail</name>
 				<token/>
-				<clientid/>
+				<customerid/>
 				<specificerrmsg>- Working -</specificerrmsg>
 				<sallowspecific>0</sallowspecific>
 			</bluemail>
