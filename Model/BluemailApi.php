@@ -16,8 +16,7 @@ use Magento\Framework\Webapi\Rest\Request;
 use Mantik\Bluemail\Helper\Config;
 
 /**
- * @api
- * @since 100.0.2
+ * Class BluemailApi
  */
 class BluemailApi {
 
@@ -39,8 +38,7 @@ class BluemailApi {
     protected $configHelper;
 
     /**
-     * GitApiService constructor
-     *
+     * BluemailApi constructor.
      * @param ClientFactory $clientFactory
      * @param ResponseFactory $responseFactory
      * @param Config $configHelper

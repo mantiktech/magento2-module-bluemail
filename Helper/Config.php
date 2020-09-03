@@ -13,6 +13,9 @@ use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Store\Model\ScopeInterface;
 
+/**
+ * Class Config
+ */
 class Config extends AbstractHelper
 {
     /**
