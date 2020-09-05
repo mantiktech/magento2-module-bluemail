@@ -15,6 +15,9 @@
 				<name>Bluemail</name>
 				<token/>
 				<customerid/>
+				<sandboxmode/>
+                <sandboxapiurl>https://api-test.bluemailbox.com.ar/v1/</sandboxapiurl>
+                <productionapiurl></productionapiurl>
 				<specificerrmsg>- Working -</specificerrmsg>
 				<sallowspecific>0</sallowspecific>
 			</bluemail>

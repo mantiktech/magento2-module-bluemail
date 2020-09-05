@@ -17,29 +17,54 @@
 				<field id="name" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
 					<label>Method Name</label>
 				</field>
-				<field id="token" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="password">
+				<field id="token" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="password">
 					<label>X-Midla-App-Token</label>
 				</field>
-				<field id="customerid" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="password">
-					<label>Customer ID</label>
-				</field>
-				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="text">
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="text">
 					<label>Sort Order</label>
 				</field>
-				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="text">
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="text">
 					<label>Title</label>
 				</field>
-				<field id="sallowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="select">
+                <field id="sandboxmode" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="select">
+                    <label>Sandbox Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="sandboxapiurl" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="text" canRestore="1">
+                    <label>Sandbox Api URL</label>
+                    <depends>
+                        <field id="sandboxmode">1</field>
+                    </depends>
+                </field>
+                <field id="sandboxcustomerid" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="72" translate="label" type="password">
+                    <label>Sandbox Customer ID</label>
+                    <depends>
+                        <field id="sandboxmode">1</field>
+                    </depends>
+                </field>
+                <field id="productionapiurl" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="73" translate="label" type="text" canRestore="1">
+                    <label>Production Api URL</label>
+                    <depends>
+                        <field id="sandboxmode">0</field>
+                    </depends>
+                </field>
+                <field id="productioncustomerid" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="74" translate="label" type="password">
+                    <label>Production Customer ID</label>
+                    <depends>
+                        <field id="sandboxmode">0</field>
+                    </depends>
+                </field>
+				<field id="sallowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label" type="select">
 					<label>Ship to Applicable Countries</label>
 					<frontend_class>shipping-applicable-country</frontend_class>
 					<source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
 				</field>
-				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="multiselect">
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="multiselect">
 					<label>Ship to Specific Countries</label>
 					<can_be_empty>1</can_be_empty>
 					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
 				</field>
-				<field id="specificerrmsg" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label" type="textarea">
+				<field id="specificerrmsg" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="textarea">
 					<label>Displayed Error Message</label>
 				</field>
 			</group>
