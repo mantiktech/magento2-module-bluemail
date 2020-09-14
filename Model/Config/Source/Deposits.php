@@ -11,28 +11,35 @@ declare(strict_types=1);
 namespace Mantik\Bluemail\Model\Config\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
-use Mantik\Bluemail\Model\BluemailApi\Pickup;
+use Magento\Framework\Serialize\Serializer\Json;
+use Mantik\Bluemail\Model\BluemailApi\Stores;
 
 /**
  * Class Deposits
  */
 class Deposits implements OptionSourceInterface
 {
-    // TODO: Add request to api for deposit list
     /**
-     * @var Pickup
+     * @var Stores
      */
-    private $bmPickup;
+    private $bmStores;
+
+    /**
+     * @var Json
+     */
+    private $json;
 
     /**
      * Deposits constructor.
      *
-     * @param Pickup $bmPickup
+     * @param Stores $bmStores
      */
     public function __construct(
-        Pickup $bmPickup
+        Stores $bmStores,
+        Json $json
     ) {
-        $this->bmPickup = $bmPickup;
+        $this->bmStores = $bmStores;
+        $this->json = $json;
     }
 
     /**
@@ -42,11 +49,15 @@ class Deposits implements OptionSourceInterface
      */
     public function toOptionArray()
     {
-        return [
-            [
-                'value' => '',
-                'label' => __('Select one option ...')
-            ]
-        ];
+        $options = array();
+
+        $stores = $this->bmStores->getDepositList();
+        $decodeStores = $this->json->unserialize($stores);
+
+        foreach ($decodeStores['Stores'] as $key => $store) {
+            array_push($options, ['value' => $store['id'], 'label' => $store['name'] . " (" . $store['town'] . ")"]);
+        }
+
+        return $options;
     }
 }

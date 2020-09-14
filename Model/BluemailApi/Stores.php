@@ -18,6 +18,7 @@ use Mantik\Bluemail\Model\BluemailApi;
 class Stores extends BluemailApi {
     const API_REQUEST_ENDPOINT = 'store';
 
+
     /**
      * Fetch some data from API
      */
@@ -45,20 +46,27 @@ class Stores extends BluemailApi {
             $customerId = $this->configHelper->getCustomerId();
         }
 
-        $params = [
-            'headers' => $this->getHeaders(),
-            'query' => $this->getQueryParams()
-        ];
+        $params = $this->getParams();
 
         $response = $this->doRequest(
             static::API_REQUEST_ENDPOINT,
             $params
         );
 
-        $status = $response->getStatusCode(); // 200 status code
-        $responseBody = $response->getBody();
-        $responseContent = $responseBody->getContents();
+        if ($response->getStatusCode() == 200) {
+            $responseBody = $response->getBody();
 
+            return $responseBody->getContents();
+        }
+
+        return false;
+    }
+
+    private function getParams() {
+        return $params = [
+            'headers' => $this->getHeaders(),
+            'query' => $this->getQueryParams()
+        ];
     }
 }
 
