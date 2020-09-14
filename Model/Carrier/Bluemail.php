@@ -5,8 +5,6 @@
  * @link https://www.mantik.tech/
  */
 
-declare(strict_types=1);
-
 namespace Mantik\Bluemail\Model\Carrier;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -15,8 +13,8 @@ use Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory;
 use Magento\Quote\Model\Quote\Address\RateResult\MethodFactory;
 use Magento\Shipping\Model\Carrier\AbstractCarrier;
 use Magento\Shipping\Model\Carrier\CarrierInterface;
-use Magento\Shipping\Model\Rate\Result;
 use Magento\Shipping\Model\Rate\ResultFactory;
+use Mantik\Bluemail\Model\BluemailApi\Estimates;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -46,6 +44,10 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
     protected $_rateMethodFactory;
 
     /**
+     * @var Estimates
+     */
+    protected $estimates;
+    /**
      * Constructor
      *
      * @param ScopeConfigInterface $scopeConfig
@@ -53,6 +55,7 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
      * @param LoggerInterface $logger
      * @param ResultFactory $rateResultFactory
      * @param MethodFactory $rateMethodFactory
+     * @param Estimates $estimates
      * @param array $data
      */
     public function __construct(
@@ -61,10 +64,12 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
         LoggerInterface $logger,
         ResultFactory $rateResultFactory,
         MethodFactory $rateMethodFactory,
+        Estimates $estimates,
         array $data = []
     ) {
         $this->_rateResultFactory = $rateResultFactory;
         $this->_rateMethodFactory = $rateMethodFactory;
+        $this->estimates = $estimates;
 
         parent::__construct($scopeConfig, $rateErrorFactory, $logger, $data);
     }
@@ -74,32 +79,34 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
      */
     public function collectRates(RateRequest $request)
     {
-        if (!$this->getConfigFlag('active')) {
+        if (!$this->getConfigFlag('active') || $request->getPackageQty() == 0) {
             return false;
         }
 
-        $shippingPrice = $this->getConfigData('price');
-
         $result = $this->_rateResultFactory->create();
 
-        if ($shippingPrice !== false) {
-            $method = $this->_rateMethodFactory->create();
+        $method = $this->_rateMethodFactory->create();
+        $method->setCarrier($this->_code);
+        $method->setCarrierTitle($this->getConfigData('name'));
 
-            $method->setCarrier($this->_code);
-            $method->setCarrierTitle($this->getConfigData('title'));
+        $method->setMethodTitle($this->getConfigData('name'));
 
+        if ($request->getFreeShipping() === true) {
             $method->setMethod($this->_code);
-            $method->setMethodTitle($this->getConfigData('name'));
-
-            if ($request->getFreeShipping() === true || $request->getPackageQty() == $this->getFreeBoxes()) {
-                $shippingPrice = '0.00';
-            }
-
-            $method->setPrice($shippingPrice);
-            $method->setCost($shippingPrice);
-
-            $result->append($method);
+            $shippingPrice = '0.00';
+        } else {
+            $this->estimates->execute(['depositId'=>1,'destZip'=>1001,'Packages'=>["weight"=> 1.2,
+        "weightUnit"=> "KG",
+        "sizeHeight"=> 5,
+        "sizeWidth"=> 26,
+        "sizeDepth"=> 29.7,
+        "declaredValue"=> 1843.8]]);
         }
+
+        $method->setPrice($shippingPrice);
+        $method->setCost($shippingPrice);
+
+        $result->append($method);
 
         return $result;
     }

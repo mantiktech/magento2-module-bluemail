@@ -18,8 +18,8 @@ use Mantik\Bluemail\Helper\Config;
 /**
  * Class BluemailApi
  */
-class BluemailApi {
-
+abstract class BluemailApi
+{
     const HEADER_APPLICATION_JSON = 'application/json';
 
     /**
@@ -38,6 +38,25 @@ class BluemailApi {
     protected $configHelper;
 
     /**
+     * @var array
+     */
+    protected $headers;
+
+    /**
+     * @var array
+     */
+    protected $bodyParam;
+
+    /**
+     * @var array
+     */
+    protected $response;
+
+    /**
+     * @var string
+     */
+    protected $status;
+    /**
      * BluemailApi constructor.
      * @param ClientFactory $clientFactory
      * @param ResponseFactory $responseFactory
@@ -51,22 +70,29 @@ class BluemailApi {
         $this->clientFactory = $clientFactory;
         $this->responseFactory = $responseFactory;
         $this->configHelper = $configHelper;
+        $this->headers = [];
+        $this->bodyParam = [];
     }
+
+    abstract public function execute($data);
 
     /**
      * Do API request with provided params
      *
      * @param string $uriEndpoint
-     * @param array $params
      * @param string $requestMethod
      *
      * @return Response
      */
     protected function doRequest(
         string $uriEndpoint,
-        array $params = [],
         string $requestMethod = Request::HTTP_METHOD_GET
     ): Response {
+        $params = [
+            'headers' => $this->getHeaders(),
+            'query' => $this->getQueryParams()
+        ];
+
         /** @var Client $client */
         $client = $this->clientFactory->create(
             [
@@ -80,6 +106,9 @@ class BluemailApi {
                 $uriEndpoint,
                 $params
             );
+            $this->setStatus($response->getStatusCode());
+            $responseBody = $response->getBody();
+            $this->response = $responseBody->getContents();
         } catch (GuzzleException $exception) {
             /** @var Response $response */
             $response = $this->responseFactory->create([
@@ -91,17 +120,45 @@ class BluemailApi {
         return $response;
     }
 
-    protected function getHeaders() {
-        return [
+    protected function getHeaders()
+    {
+        return array_merge([
             'Accept' => self::HEADER_APPLICATION_JSON,
             'Content-Type' => self::HEADER_APPLICATION_JSON,
             'X-Midla-App-Token' => $this->configHelper->getAppToken()
-        ];
+        ], $this->headers);
     }
 
-    protected function getQueryParams() {
-        return [
-            'customerId' => $this->configHelper->getCustomerId()
-        ];
+    protected function getQueryParams()
+    {
+        return array_merge(['customerId' => $this->configHelper->getCustomerId()], $this->bodyParam);
+    }
+
+    public function setHeaderParams($param)
+    {
+        if (is_array($param)) {
+            $this->headers = array_merge($this->headers, $param);
+        } else {
+            $this->headers[] = $param;
+        }
+    }
+
+    public function setBodyParams($param)
+    {
+        if (is_array($param)) {
+            $this->bodyParam = array_merge($this->headers, $param);
+        } else {
+            $this->bodyParam[] = $param;
+        }
+    }
+
+    protected function setStatus($status){
+        $this->status = $status;
+        //to do: if not 200 log response
+    }
+
+    public function getResponse()
+    {
+        return $this->response;
     }
 }

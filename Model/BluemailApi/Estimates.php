@@ -12,27 +12,21 @@ use Mantik\Bluemail\Model\BluemailApi;
 /**
  * Class Estimates
  */
-class Estimates extends BluemailApi {
-    const API_REQUEST_ENDPOINT = 'delivery/calendar';
+class Estimates extends BluemailApi
+{
+    const API_REQUEST_ENDPOINT = 'delivery/price';
 
     /**
      * Fetch some data from API
      */
-    public function execute(): void
+    public function execute($data): void
     {
-        $params = [
-            'headers' => $this->getHeaders(),
-            'query' => $this->getQueryParams()
-        ];
+        //todo: check $data paramas
 
-        $response = $this->doRequest(
-            static::API_REQUEST_ENDPOINT,
-            $params
+        $this->setBodyParams($data);
+         $this->doRequest(
+            static::API_REQUEST_ENDPOINT
         );
 
-        $status = $response->getStatusCode(); // 200 status code
-        $responseBody = $response->getBody();
-        $responseContent = $responseBody->getContents();
     }
 }
-
