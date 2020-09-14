@@ -7,6 +7,9 @@
 
 namespace Mantik\Bluemail\Model\BluemailApi;
 
+use GuzzleHttp\ClientFactory;
+use GuzzleHttp\Psr7\ResponseFactory;
+use Mantik\Bluemail\Helper\Config;
 use Mantik\Bluemail\Model\BluemailApi;
 
 /**
@@ -33,6 +36,29 @@ class Stores extends BluemailApi {
         $status = $response->getStatusCode(); // 200 status code
         $responseBody = $response->getBody();
         $responseContent = $responseBody->getContents();
+    }
+
+    public function getDepositList(
+        $customerId = null
+    ) {
+        if (!$customerId) {
+            $customerId = $this->configHelper->getCustomerId();
+        }
+
+        $params = [
+            'headers' => $this->getHeaders(),
+            'query' => $this->getQueryParams()
+        ];
+
+        $response = $this->doRequest(
+            static::API_REQUEST_ENDPOINT,
+            $params
+        );
+
+        $status = $response->getStatusCode(); // 200 status code
+        $responseBody = $response->getBody();
+        $responseContent = $responseBody->getContents();
+
     }
 }
 
