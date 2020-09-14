@@ -28,15 +28,28 @@ class Config extends AbstractHelper
      * Databse paths
      */
     const CONFIG_MODULE_ENABLED = self::SECTION . self::GROUP . 'active';
-    const CONFIG_METHOD_NAME = self::SECTION . self::GROUP . 'name';
-    const CONFIG_XAPP_TOKEN = self::SECTION . self::GROUP . 'token';
-    const CONFIG_CUSTOMER_ID = self::SECTION . self::GROUP . 'customerid';
-    const CONFIG_COUNTRY_RESTRICTION = self::SECTION . self::GROUP . 'sallowspecific';
+    const CONFIG_SANDBOX_ENABLED = self::SECTION . self::GROUP . 'sandboxmode';
 
-    /**
-     * API Access Url
-     */
-    const BLUEMAIL_API_URL = 'https://api-test.bluemailbox.com.ar/v1/';
+    const CONFIG_METHOD_NAME = self::SECTION . self::GROUP . 'name';
+
+    const CONFIG_SANDBOX_API_URL = self::SECTION . self::GROUP . 'sandboxapiurl';
+    const CONFIG_SANDBOX_XAPP_TOKEN = self::SECTION . self::GROUP . 'sandboxtoken';
+    const CONFIG_SANDBOX_CUSTOMER_ID = self::SECTION . self::GROUP . 'sandboxcustomerid';
+
+    const CONFIG_PRODUCTION_API_URL = self::SECTION . self::GROUP . 'productionapiurl';
+    const CONFIG_PRODUCTION_XAPP_TOKEN = self::SECTION . self::GROUP . 'productiontoken';
+    const CONFIG_PRODUCTION_CUSTOMER_ID = self::SECTION . self::GROUP . 'productioncustomerid';
+
+    const CONFIG_DELIVERY_TYPE = self::SECTION . self::GROUP . 'deliverytype';
+    const CONFIG_DEPOSIT_ID = self::SECTION . self::GROUP . 'depositid';
+
+    const CONFIG_SIZE_HEIGHT_ID = self::SECTION . self::GROUP . 'sizeheight';
+    const CONFIG_SIZE_WIDTH_ID = self::SECTION . self::GROUP . 'sizewidth';
+    const CONFIG_SIZE_DEPTH_ID = self::SECTION . self::GROUP . 'sizedepth';
+    const CONFIG_WEIGHT_UNIT_ID = self::SECTION . self::GROUP . 'weightunit';
+
+
+    const CONFIG_COUNTRY_RESTRICTION = self::SECTION . self::GROUP . 'sallowspecific';
 
     /**
      * @param Context $context
@@ -66,21 +79,111 @@ class Config extends AbstractHelper
     }
 
     /**
+     * Get Bluemail Sandbox State
+     *
+     * @return mixed
+     */
+    public function getSandboxState() {
+        return $this->getConfigValue(self::CONFIG_SANDBOX_ENABLED);
+    }
+
+    /**
      * Get Bluemail X-Midla-App-Token
      *
      * @return mixed
      */
     public function getAppToken() {
-        return $this->getConfigValue(self::CONFIG_XAPP_TOKEN);
+        if ($this->getSandboxState()) {
+            $appToken = self::CONFIG_SANDBOX_XAPP_TOKEN;
+        } else {
+            $appToken = self::CONFIG_PRODUCTION_XAPP_TOKEN;
+        }
+
+        return $this->getConfigValue($appToken);
     }
 
     /**
-     * Get Bluemail Client ID
+     * Get Bluemail Customer ID
      *
      * @return mixed
      */
     public function getCustomerId() {
-        return $this->getConfigValue(self::CONFIG_CUSTOMER_ID);
+        if ($this->getSandboxState()) {
+            $customerId = self::CONFIG_SANDBOX_CUSTOMER_ID;
+        } else {
+            $customerId = self::CONFIG_PRODUCTION_CUSTOMER_ID;
+        }
+
+        return $this->getConfigValue($customerId);
+    }
+
+    /**
+     * Get API URL
+     *
+     * @return mixed
+     */
+    public function getApiUrl() {
+        if ($this->getSandboxState()) {
+            $apiUrl = self::CONFIG_SANDBOX_API_URL;
+        } else {
+            $apiUrl = self::CONFIG_PRODUCTION_API_URL;
+        }
+
+        return $this->getConfigValue($apiUrl);
+    }
+
+    /**
+     * Get Delivery Type
+     *
+     * @return mixed
+     */
+    public function getDeliveryType() {
+        return $this->getConfigValue(self::CONFIG_DELIVERY_TYPE);
+    }
+
+    /**
+     * Get Deposit Id
+     *
+     * @return mixed
+     */
+    public function getDepositId() {
+        return $this->getConfigValue(self::CONFIG_DEPOSIT_ID);
+    }
+
+    /**
+     * Get Size Height Attribute Id
+     *
+     * @return mixed
+     */
+    public function getSizeHeightAttributeId() {
+        return $this->getConfigValue(self::CONFIG_SIZE_HEIGHT_ID);
+    }
+
+    /**
+     * Get Size Width Attribute Id
+     *
+     * @return mixed
+     */
+    public function getSizeWidthAttributeId() {
+        return $this->getConfigValue(self::CONFIG_SIZE_WIDTH_ID);
+    }
+
+    /**
+     * Get Size Depth Attribute Id
+     *
+     * @return mixed
+     */
+    public function getSizeDepthAttributeId() {
+        return $this->getConfigValue(self::CONFIG_SIZE_DEPTH_ID);
+    }
+
+    /**
+     * Get Weight Unit
+     *
+     * @return mixed
+     */
+    public function getWeightUnit() {
+        return $this->getConfigValue(self::CONFIG_WEIGHT_UNIT_ID);
     }
 
     /**
@@ -92,9 +195,6 @@ class Config extends AbstractHelper
         return $this->getConfigValue(self::CONFIG_COUNTRY_RESTRICTION);
     }
 
-    public function getApiUrl() {
-        return self::BLUEMAIL_API_URL;
-    }
 
     /**
      * Return specific config value based on path

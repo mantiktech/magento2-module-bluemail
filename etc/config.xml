@@ -17,8 +17,14 @@
 				<customerid/>
 				<sandboxmode/>
                 <sandboxapiurl>https://api-test.bluemailbox.com.ar/v1/</sandboxapiurl>
-                <productionapiurl></productionapiurl>
-				<specificerrmsg>- Working -</specificerrmsg>
+                <productionapiurl>https://api.bluemailbox.com.ar/v1/</productionapiurl>
+                <deliverytype/>
+                <depositid/>
+                <sizeheight/>
+                <sizewidth/>
+                <sizedepth/>
+                <weightunit/>
+                <specificerrmsg>- Working -</specificerrmsg>
 				<sallowspecific>0</sallowspecific>
 			</bluemail>
 		</carriers>
