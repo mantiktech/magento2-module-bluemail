@@ -85,29 +85,32 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
 
         $result = $this->_rateResultFactory->create();
 
-        $method = $this->_rateMethodFactory->create();
-        $method->setCarrier($this->_code);
-        $method->setCarrierTitle($this->getConfigData('name'));
-
-        $method->setMethodTitle($this->getConfigData('name'));
-
+        $method = $this->createMethod();
         if ($request->getFreeShipping() === true) {
+            $method->setCarrier($this->_code);
+            $method->setCarrierTitle($this->getConfigData('name'));
+            $method->setMethodTitle(__('Free shipping'));
             $method->setMethod($this->_code);
             $shippingPrice = '0.00';
+            $method->setCost($shippingPrice);
+            $result->append($method);
         } else {
-            $this->estimates->execute(['depositId'=>1,'destZip'=>1001,'Packages'=>["weight"=> 1.2,
-        "weightUnit"=> "KG",
-        "sizeHeight"=> 5,
-        "sizeWidth"=> 26,
-        "sizeDepth"=> 29.7,
-        "declaredValue"=> 1843.8]]);
+            $this->estimates->execute(['destZip'=>$request->getDestPostcode(),
+                                       'Packages'=> $this->estimates->getPackages($request->getAllItems())
+                                      ]);
+
+            $methods = $this->estimates->getResponse();
+            if (!empty($methods['Prices'])) {
+                foreach ($methods['Prices'] as $item) {
+                    $method = $this->createMethod();
+                    $method->setMethodTitle($item['name']);
+                    $method->setMethod($item['code']);
+                    $method->setPrice($item['price']);
+                    $method->setCost($item['price']);
+                    $result->append($method);
+                }
+            }
         }
-
-        $method->setPrice($shippingPrice);
-        $method->setCost($shippingPrice);
-
-        $result->append($method);
-
         return $result;
     }
 
@@ -119,5 +122,10 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
     public function getAllowedMethods()
     {
         return [$this->_code => $this->getConfigData('name')];
+    }
+    private function createMethod(){
+        $method = $this->_rateMethodFactory->create();
+        $method->setCarrier($this->_code);
+        return $method->setCarrierTitle($this->getConfigData('name'));
     }
 }

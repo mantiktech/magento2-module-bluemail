@@ -48,7 +48,6 @@ class Config extends AbstractHelper
     const CONFIG_SIZE_DEPTH_ID = self::SECTION . self::GROUP . 'sizedepth';
     const CONFIG_WEIGHT_UNIT_ID = self::SECTION . self::GROUP . 'weightunit';
 
-
     const CONFIG_COUNTRY_RESTRICTION = self::SECTION . self::GROUP . 'sallowspecific';
 
     /**
@@ -65,7 +64,8 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    public function isEnabled() {
+    public function isEnabled()
+    {
         return $this->getConfigValue(self::CONFIG_MODULE_ENABLED);
     }
 
@@ -74,7 +74,8 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    public function getMethodName() {
+    public function getMethodName()
+    {
         return $this->getConfigValue(self::CONFIG_METHOD_NAME);
     }
 
@@ -83,7 +84,8 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    public function getSandboxState() {
+    public function getSandboxState()
+    {
         return $this->getConfigValue(self::CONFIG_SANDBOX_ENABLED);
     }
 
@@ -92,7 +94,8 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    public function getAppToken() {
+    public function getAppToken()
+    {
         if ($this->getSandboxState()) {
             $appToken = self::CONFIG_SANDBOX_XAPP_TOKEN;
         } else {
@@ -107,7 +110,8 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    public function getCustomerId() {
+    public function getCustomerId()
+    {
         if ($this->getSandboxState()) {
             $customerId = self::CONFIG_SANDBOX_CUSTOMER_ID;
         } else {
@@ -122,7 +126,8 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    public function getApiUrl() {
+    public function getApiUrl()
+    {
         if ($this->getSandboxState()) {
             $apiUrl = self::CONFIG_SANDBOX_API_URL;
         } else {
@@ -137,7 +142,8 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    public function getDeliveryType() {
+    public function getDeliveryType()
+    {
         return $this->getConfigValue(self::CONFIG_DELIVERY_TYPE);
     }
 
@@ -146,7 +152,8 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    public function getDepositId() {
+    public function getDepositId()
+    {
         return $this->getConfigValue(self::CONFIG_DEPOSIT_ID);
     }
 
@@ -155,7 +162,8 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    public function getSizeHeightAttributeId() {
+    public function getSizeHeightAttributeId()
+    {
         return $this->getConfigValue(self::CONFIG_SIZE_HEIGHT_ID);
     }
 
@@ -164,7 +172,8 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    public function getSizeWidthAttributeId() {
+    public function getSizeWidthAttributeId()
+    {
         return $this->getConfigValue(self::CONFIG_SIZE_WIDTH_ID);
     }
 
@@ -173,7 +182,8 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    public function getSizeDepthAttributeId() {
+    public function getSizeDepthAttributeId()
+    {
         return $this->getConfigValue(self::CONFIG_SIZE_DEPTH_ID);
     }
 
@@ -182,7 +192,8 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    public function getWeightUnit() {
+    public function getWeightUnit()
+    {
         return $this->getConfigValue(self::CONFIG_WEIGHT_UNIT_ID);
     }
 
@@ -191,10 +202,10 @@ class Config extends AbstractHelper
      *
      * @return mixed
      */
-    public function getCountryRestrictions() {
+    public function getCountryRestrictions()
+    {
         return $this->getConfigValue(self::CONFIG_COUNTRY_RESTRICTION);
     }
-
 
     /**
      * Return specific config value based on path
@@ -203,7 +214,7 @@ class Config extends AbstractHelper
      * @param null $storeCode
      * @return mixed
      */
-    private function getConfigValue (
+    private function getConfigValue(
         $path,
         $storeCode = null
     ) {

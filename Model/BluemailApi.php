@@ -145,20 +145,39 @@ abstract class BluemailApi
 
     public function setBodyParams($param)
     {
-        if (is_array($param)) {
-            $this->bodyParam = array_merge($this->headers, $param);
-        } else {
-            $this->bodyParam[] = $param;
-        }
+        $this->bodyParam = array_merge($this->bodyParam, $param);
     }
 
-    protected function setStatus($status){
+    protected function setStatus($status)
+    {
         $this->status = $status;
-        //to do: if not 200 log response
+        //todo: if not 200 log response
+    }
+
+    protected function getStatus()
+    {
+        return $this->status;
     }
 
     public function getResponse()
     {
-        return $this->response;
+        return json_decode($this->response, true);
+    }
+
+    public function getPackages($items)
+    {
+        $package=[];
+        foreach ($items as $item) {
+            $package[]=[
+                "weight"=> $item->getWeight(),
+                "weightUnit"=> "KG", //$this->configHelper->getWeightUnit()
+                "sizeHeight"=> 5,
+                "sizeWidth"=> 5,
+                "sizeDepth"=> 5,
+                "declaredValue"=> $item->getPrice(),
+                "quantity" => $item->getQty()
+            ];
+        }
+        return $package;
     }
 }
