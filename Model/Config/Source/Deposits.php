@@ -49,10 +49,10 @@ class Deposits implements OptionSourceInterface
      */
     public function toOptionArray()
     {
-        $options = array();
+        $options = [];
 
         $stores = $this->bmStores->getDepositList();
-        $decodeStores = $this->json->unserialize($stores);
+        $decodeStores = $stores;
 
         foreach ($decodeStores['Stores'] as $key => $store) {
             array_push($options, ['value' => $store['id'], 'label' => $store['name'] . " (" . $store['town'] . ")"]);

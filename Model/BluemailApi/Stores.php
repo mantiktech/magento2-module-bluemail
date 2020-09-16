@@ -7,66 +7,37 @@
 
 namespace Mantik\Bluemail\Model\BluemailApi;
 
-use GuzzleHttp\ClientFactory;
-use GuzzleHttp\Psr7\ResponseFactory;
-use Mantik\Bluemail\Helper\Config;
 use Mantik\Bluemail\Model\BluemailApi;
 
 /**
  * Class Stores
  */
-class Stores extends BluemailApi {
+class Stores extends BluemailApi
+{
     const API_REQUEST_ENDPOINT = 'store';
-
 
     /**
      * Fetch some data from API
+     * @param array $data
      */
-    public function execute(): void
+    public function execute($data=[])
     {
-        $params = [
-            'headers' => $this->getHeaders(),
-            'query' => $this->getQueryParams()
-        ];
-
-        $response = $this->doRequest(
-            static::API_REQUEST_ENDPOINT,
-            $params
+        $this->doRequest(
+            static::API_REQUEST_ENDPOINT
         );
-
-        $status = $response->getStatusCode(); // 200 status code
-        $responseBody = $response->getBody();
-        $responseContent = $responseBody->getContents();
     }
 
-    public function getDepositList(
-        $customerId = null
-    ) {
-        if (!$customerId) {
-            $customerId = $this->configHelper->getCustomerId();
-        }
-
-        $params = $this->getParams();
-
+    public function getDepositList()
+    {
         $response = $this->doRequest(
-            static::API_REQUEST_ENDPOINT,
-            $params
+            static::API_REQUEST_ENDPOINT
         );
 
-        if ($response->getStatusCode() == 200) {
-            $responseBody = $response->getBody();
+        if ($this->getStatus() == 200) {
 
-            return $responseBody->getContents();
+            return $this->getResponse();
         }
 
         return false;
     }
-
-    private function getParams() {
-        return $params = [
-            'headers' => $this->getHeaders(),
-            'query' => $this->getQueryParams()
-        ];
-    }
 }
-
