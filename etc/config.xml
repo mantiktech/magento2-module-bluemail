@@ -20,6 +20,7 @@
                 <productionapiurl>https://api.bluemailbox.com.ar/v1/</productionapiurl>
                 <deliverytype/>
                 <depositid/>
+                <ivacalculate/>
                 <sizeheight/>
                 <sizewidth/>
                 <sizedepth/>

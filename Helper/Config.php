@@ -43,6 +43,8 @@ class Config extends AbstractHelper
     const CONFIG_DELIVERY_TYPE = self::SECTION . self::GROUP . 'deliverytype';
     const CONFIG_DEPOSIT_ID = self::SECTION . self::GROUP . 'depositid';
 
+    const CONFIG_IVA_CALCULATE = self::SECTION . self::GROUP . 'ivacalculate';
+
     const CONFIG_SIZE_HEIGHT_ID = self::SECTION . self::GROUP . 'sizeheight';
     const CONFIG_SIZE_WIDTH_ID = self::SECTION . self::GROUP . 'sizewidth';
     const CONFIG_SIZE_DEPTH_ID = self::SECTION . self::GROUP . 'sizedepth';
@@ -205,6 +207,16 @@ class Config extends AbstractHelper
     public function getCountryRestrictions()
     {
         return $this->getConfigValue(self::CONFIG_COUNTRY_RESTRICTION);
+    }
+
+    /**
+     * Get Country Restrictions
+     *
+     * @return mixed
+     */
+    public function getIvaTaxCalculate()
+    {
+        return $this->getConfigValue(self::CONFIG_IVA_CALCULATE);
     }
 
     /**
