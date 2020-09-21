@@ -51,6 +51,8 @@ class Deposits implements OptionSourceInterface
     {
         $options = [];
 
+        array_push($options, ['value' => '', 'label' => __('Select a deposit')]);
+
         $stores = $this->bmStores->getDepositList();
         $decodeStores = $stores;
 

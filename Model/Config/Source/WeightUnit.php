@@ -25,8 +25,8 @@ class WeightUnit implements OptionSourceInterface
     public function toOptionArray()
     {
         return [
-            ['value' => 'kgs', 'label' => __('kgs')],
-            ['value' => 'lbs', 'label' => __('lbs')]
+            ['value' => 'kg', 'label' => __('KG')],
+            ['value' => 'lb', 'label' => __('LB')]
         ];
     }
 }

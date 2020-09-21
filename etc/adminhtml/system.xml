@@ -63,15 +63,19 @@
                         <field id="sandboxmode">0</field>
                     </depends>
                 </field>
-                <field id="deliverytype" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label" type="select">
+                <field id="deliverytype" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
                     <label>Delivery Type</label>
                     <comment/>
                     <source_model>Mantik\Bluemail\Model\Config\Source\DeliveryType</source_model>
                 </field>
-                <field id="depositid" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+                <field id="depositid" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label" type="select">
                     <label>Deposit / Store</label>
                     <comment/>
                     <source_model>Mantik\Bluemail\Model\Config\Source\Deposits</source_model>
+                </field>
+                <field id="ivacalculate" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+                    <label>Add IVA to shipping calculation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="sizeheight" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="select">
                     <label>Height Attribute</label>

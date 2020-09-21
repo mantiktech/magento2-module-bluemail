@@ -27,10 +27,6 @@ class DeliveryType implements OptionSourceInterface
     {
         return [
             [
-                'value' => '',
-                'label' => __('Select one option ...')
-            ],
-            [
                 'value' => '1',
                 'label' => __('Send')
             ],
