@@ -81,7 +81,6 @@ class GridSerializer extends Template
                 $regionLinks[$magentoRegionId] = $bluemailRegionId;
             }
         }
-
         return $this->jsonEncoder->encode($regionLinks);
     }
 }

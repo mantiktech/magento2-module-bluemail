@@ -68,7 +68,7 @@ class Import extends Action implements HttpPostActionInterface
     public function execute()
     {
         try {
-            $departments = $this->departementSource->toOptionArray();
+            $departments = $this->departementSource->toOptionArray();//TODO use actual department model instead of option source
             $counter = 0;
             foreach ($departments as $department) {
                 if (!empty($department['value']) && !empty($department['label'])) { //TODO Check if region link is already created

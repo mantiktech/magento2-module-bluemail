@@ -154,49 +154,6 @@ class RegionGrid extends Extended implements TabInterface
     }
 
     /**
-     * @return array
-     */
-    protected function _getSelectedProducts()
-    {
-        $products = $this->getRequest()->getPost('selected_products');
-        if ($products === null) {
-            $slider = $this->getSlider();
-            $productIds = $slider->getProductIds() ? explode('&', $slider->getProductIds()) : [];
-            return $productIds;
-        }
-        return $products;
-    }
-
-    /**
-     * @return Slider
-     */
-    public function getSlider()
-    {
-        $sliderId = $this->getRequest()->getParam('id');
-        $slider = $this->_sliderFactory->create();
-        if ($sliderId) {
-            $slider->load($sliderId);
-        }
-
-        return $slider;
-    }
-
-    /**
-     * @return array
-     */
-    public function getSelectedProducts()
-    {
-        $slider = $this->getSlider();
-        $selected = $slider->getProductIds() ? explode('&', $slider->getProductIds()) : [];
-
-        if (!is_array($selected)) {
-            $selected = [];
-        }
-
-        return $selected;
-    }
-
-    /**
      * @return string
      */
     public function getTabLabel()
