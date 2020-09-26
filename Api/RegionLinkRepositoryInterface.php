@@ -10,6 +10,10 @@ namespace Mantik\Bluemail\Api;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Mantik\Bluemail\Api\Data\RegionLinkInterface;
 
+/**
+ * Interface RegionLinkRepositoryInterface
+ * @package Mantik\Bluemail\Api
+ */
 interface RegionLinkRepositoryInterface
 {
     /**

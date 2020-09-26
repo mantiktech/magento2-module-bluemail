@@ -17,19 +17,6 @@ use Magento\Backend\Block\Widget\Form\Container;
 class Edit extends Container
 {
     /**
-     * FormContainer constructor.
-     *
-     * @param Context $context
-     * @param array   $data
-     */
-    public function __construct(
-        Context $context,
-        array $data = []
-    ) {
-        parent::__construct($context, $data);
-    }
-
-    /**
      * Initialize form.
      *
      * @return void

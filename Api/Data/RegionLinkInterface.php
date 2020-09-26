@@ -9,6 +9,10 @@ namespace Mantik\Bluemail\Api\Data;
 
 use Magento\Framework\Api\ExtensibleDataInterface;
 
+/**
+ * Interface RegionLinkInterface
+ * @package Mantik\Bluemail\Api\Data
+ */
 interface RegionLinkInterface extends ExtensibleDataInterface
 {
     /**
