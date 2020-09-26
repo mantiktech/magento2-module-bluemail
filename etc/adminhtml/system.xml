@@ -7,7 +7,7 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
 	<system>
-		<section id="carriers" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="1000" translate="label">
+		<section id="carriers" showInDefault="1" showInStore="1" showInWebsite="1" translate="label">
 			<group id="bluemail" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
 				<label>Bluemail</label>
 				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
@@ -110,6 +110,10 @@
 				<field id="specificerrmsg" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="120" translate="label" type="textarea">
 					<label>Displayed Error Message</label>
 				</field>
+                <field id="region_linking_link" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="130" translate="label" type="label">
+                    <label>Region Linking</label>
+                    <frontend_model>Mantik\Bluemail\Block\Adminhtml\System\Config\Form\Field\RegionLinkingLink</frontend_model>
+                </field>
 			</group>
 		</section>
 	</system>

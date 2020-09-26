@@ -1,0 +1,15 @@
+{
+    "bluemail_region_link": {
+        "column": {
+            "link_id": true,
+            "magento_region_id": true,
+            "bluemail_region_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FK_C951A2C8FC9DBA819EF3A647D4DAFD0F": true,
+            "BLUEMAIL_REGION_LINK_MAGENTO_REGION_ID": true,
+            "BLUEMAIL_REGION_LINK_BLUEMAIL_REGION_ID": true
+        }
+    }
+}

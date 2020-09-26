@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright ©  2020. Mantik Tech.  All rights reserved under CC BY-NC-SA 4.0 licence.
+  ~ See LICENSE file for more details.
+  ~ @link https://www.mantik.tech/
+  -->
+
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="bluemail_region_link" resource="default" engine="innodb"
+           comment="Bluemail Region Linking">
+        <column xsi:type="int" name="link_id" padding="10" unsigned="false" nullable="false" identity="true" comment="Link ID"/>
+        <column xsi:type="int" name="magento_region_id" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="Magento Region ID"/>
+        <column xsi:type="int" name="bluemail_region_id" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="Bluemail Region ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="link_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="DIRECTORY_COUNTRY_REGION_REGION_ID" table="bluemail_region_link" column="magento_region_id" referenceTable="directory_country_region" referenceColumn="region_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="MAGENTO_REGION_ID">
+            <column name="magento_region_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="BLUEMAIL_REGION_ID">
+            <column name="bluemail_region_id"/>
+        </constraint>
+    </table>
+</schema>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright ©  2020. Mantik Tech.  All rights reserved under CC BY-NC-SA 4.0 licence.
+  ~ See LICENSE file for more details.
+  ~ @link https://www.mantik.tech/
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+        <route id="bluemail" frontName="bluemail">
+            <module name="Mantik_Bluemail"/>
+        </route>
+    </router>
+</config>

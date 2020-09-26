@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="editor"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Mantik\Bluemail\Block\Adminhtml\Region\Edit" name="bluemail_region_grid"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Mantik\Bluemail\Block\Adminhtml\Region\Edit\Tabs" name="bluemail_region_grid_tabs">
+                <block class="Mantik\Bluemail\Block\Adminhtml\Region\Edit\Tab\RegionGrid" name="bluemail_tab_region_grid"/>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">region_grid</argument>
+                    <argument name="block" xsi:type="string">bluemail_tab_region_grid</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

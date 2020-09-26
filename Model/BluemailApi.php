@@ -81,16 +81,18 @@ abstract class BluemailApi
      *
      * @param string $uriEndpoint
      * @param string $requestMethod
+     * @param bool   $includeClientId
      *
      * @return Response
      */
     protected function doRequest(
         string $uriEndpoint,
-        string $requestMethod = Request::HTTP_METHOD_GET
+        string $requestMethod = Request::HTTP_METHOD_GET,
+        bool $includeClientId = true
     ): Response {
         $params = [
             'headers' => $this->getHeaders(),
-            'query' => $this->getQueryParams()
+            'query' => $this->getQueryParams($includeClientId)
         ];
 
         /** @var Client $client */
@@ -129,9 +131,13 @@ abstract class BluemailApi
         ], $this->headers);
     }
 
-    protected function getQueryParams()
+    protected function getQueryParams(bool $includeClientId)
     {
-        return array_merge(['customerId' => $this->configHelper->getCustomerId()], $this->bodyParam);
+        $bodyParams = $this->bodyParam;
+        if ($includeClientId) {
+            $bodyParams = array_merge(['customerId' => $this->configHelper->getCustomerId()], $bodyParams);
+        }
+        return $bodyParams;
     }
 
     public function setHeaderParams($param)

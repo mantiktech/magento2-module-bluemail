@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+    <container name="root" label="Root" output="1">
+        <block class="Mantik\Bluemail\Block\Adminhtml\Region\Edit\Tab\RegionGrid" name="bluemail.region.grid"/>
+        <block class="Mantik\Bluemail\Block\Adminhtml\Region\GridSerializer" name="bluemail.grid.serializer" template="Mantik_Bluemail::region/grid/serialization.phtml" cacheable="false"/>
+    </container>
+</layout>
