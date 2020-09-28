@@ -50,14 +50,21 @@ class Deposits implements OptionSourceInterface
     public function toOptionArray()
     {
         $options = [];
-
-        array_push($options, ['value' => '', 'label' => __('Select a deposit')]);
+        $options[] = [
+            'value' => '',
+            'label' => __('Select a deposit')
+        ];
 
         $stores = $this->bmStores->getDepositList();
         $decodeStores = $stores;
 
-        foreach ($decodeStores['Stores'] as $key => $store) {
-            array_push($options, ['value' => $store['id'], 'label' => $store['name'] . " (" . $store['town'] . ")"]);
+        if (!empty($decodeStores)) {
+            foreach ($decodeStores['Stores'] as $key => $store) {
+                $options[] = [
+                    'value' => $store['id'],
+                    'label' => $store['name'] . " (" . $store['town'] . ")"
+                ];
+            }
         }
 
         return $options;
