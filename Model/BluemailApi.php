@@ -38,6 +38,11 @@ abstract class BluemailApi
     protected $configHelper;
 
     /**
+     * @var Config
+     */
+    protected $helper;
+
+    /**
      * @var array
      */
     protected $headers;
@@ -89,6 +94,7 @@ abstract class BluemailApi
         string $requestMethod = Request::HTTP_METHOD_GET
     ): Response {
         $params = [
+
             'headers' => $this->getHeaders(),
             'query' => $this->getQueryParams()
         ];
@@ -145,7 +151,7 @@ abstract class BluemailApi
 
     public function setBodyParams($param)
     {
-        $this->bodyParam = array_merge($this->bodyParam, $param);
+        $this->bodyParam = array_merge_recursive($this->bodyParam, $param);
     }
 
     protected function setStatus($status)
@@ -164,20 +170,4 @@ abstract class BluemailApi
         return json_decode($this->response, true);
     }
 
-    public function getPackages($items)
-    {
-        $package=[];
-        foreach ($items as $item) {
-            $package[]=[
-                "weight"=> $item->getWeight(),
-                "weightUnit"=> "KG", //$this->configHelper->getWeightUnit()
-                "sizeHeight"=> 5,
-                "sizeWidth"=> 5,
-                "sizeDepth"=> 5,
-                "declaredValue"=> $item->getPrice(),
-                "quantity" => $item->getQty()
-            ];
-        }
-        return $package;
-    }
 }

@@ -9,14 +9,13 @@ namespace Mantik\Bluemail\Model\BluemailApi;
 
 use Magento\Framework\Webapi\Rest\Request;
 use Mantik\Bluemail\Model\BluemailApi;
-
+use Mantik\Bluemail\Helper\Config;
 /**
- * Class Estimates
+ * Class Delivery
  */
-class Estimates extends BluemailApi
+class Delivery extends BluemailApi
 {
-    const API_REQUEST_ENDPOINT = 'delivery/price';
-
+    const API_REQUEST_ENDPOINT = 'delivery';
     /**
      * Fetch some data from API
      * @param $data
@@ -24,7 +23,13 @@ class Estimates extends BluemailApi
     public function execute($data)
     {
         //todo: check $data paramas
-        $this->setBodyParams(['depositId' => $this->configHelper->getDepositId()]);
+        $param = ["shipment" => [
+                   'fromType' => \Mantik\Bluemail\Helper\Config::API_REQUEST_FROM_TYPE,
+                    'origenId' => \Mantik\Bluemail\Helper\Config::API_REQUEST_ORIGEN_ID,
+                    'depositId' => $this->configHelper->getDepositId()
+                 ]
+            ];
+        $this->setBodyParams($param);
         $this->setBodyParams($data);
         $this->doRequest(
             static::API_REQUEST_ENDPOINT,
