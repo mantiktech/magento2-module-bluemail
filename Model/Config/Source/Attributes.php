@@ -68,7 +68,7 @@ class Attributes implements OptionSourceInterface
         $options = array(['value' => '', 'label' => __('Select an attribute ...')]);
 
         foreach ($attributesArray as $key => $value) {
-            array_push($options, ['value' => $value['attribute_id'], 'label' => $value['frontend_label']]);
+            array_push($options, ['value' => $value['attribute_code'], 'label' => $value['frontend_label']]);
         }
 
         return $options;

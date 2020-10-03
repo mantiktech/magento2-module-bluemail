@@ -23,7 +23,9 @@ class Config extends AbstractHelper
      */
     const SECTION = 'carriers/';
     const GROUP = 'bluemail/';
-
+    const DEFAULT_COUNTRY = '23';
+    const API_REQUEST_ORIGEN_ID = '6';
+    const API_REQUEST_FROM_TYPE = 'CLIENT';
     /**
      * Databse paths
      */
@@ -51,6 +53,7 @@ class Config extends AbstractHelper
     const CONFIG_WEIGHT_UNIT_ID = self::SECTION . self::GROUP . 'weightunit';
 
     const CONFIG_COUNTRY_RESTRICTION = self::SECTION . self::GROUP . 'sallowspecific';
+
 
     /**
      * @param Context $context
