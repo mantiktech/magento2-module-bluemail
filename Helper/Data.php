@@ -13,30 +13,35 @@ use Magento\Catalog\Model\ProductFactory;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Store\Model\StoreManagerInterface;
+use Mantik\Bluemail\Api\RegionLinkRepositoryInterface;
 
 class Data extends AbstractHelper
 {
     protected $configHelper;
-
     protected $storeManager;
     protected $productFactory;
+    protected $regionLinkRepositoryInterface;
+
     /**
      * @param Context $context
      * @param Config $config
      * @param StoreManagerInterface $storeManager
      * @param ProductFactory $productFactory
+     * @param RegionLinkRepositoryInterface $regionLinkRepositoryInterface
      */
     public function __construct(
         Context $context,
         Config $config,
         StoreManagerInterface $storeManager,
-        ProductFactory $productFactory
+        ProductFactory $productFactory,
+        RegionLinkRepositoryInterface $regionLinkRepositoryInterface
     ) {
         parent::__construct($context);
 
         $this->configHelper = $config;
         $this->storeManager = $storeManager;
         $this->productFactory = $productFactory;
+        $this->regionLinkRepositoryInterface = $regionLinkRepositoryInterface;
     }
 
     public function getPackages($items)
@@ -62,9 +67,9 @@ class Data extends AbstractHelper
             $package[]=[
                 "weight"=> $this->weightToKg($item->getWeight()),
                 "weightUnit"=> 'KG',
-                "sizeHeight"=> $height,
-                "sizeWidth"=> $width,
-                "sizeDepth"=> $depth,
+                "sizeHeight"=> round($height/100, 2),
+                "sizeWidth"=> round($width/100, 2),
+                "sizeDepth"=> round($depth/100, 2),
                 "declaredValue"=> $item->getPrice(),
                 "quantity" => $item->getQty()
             ];
@@ -77,15 +82,14 @@ class Data extends AbstractHelper
         $street = $order->getShippingAddress()->getStreet();
         return [
             'destName' => $order->getShippingAddress()->getName(),
-            'destCode' => $order->getShippingAddress()->getCustomerTaxVat() ? $order->getShippingAddress()->getTaxVat() : $order->getCustomerTaxvat(),
+            'destCode' => $order->getShippingAddress()->getVatId() ? $order->getShippingAddress()->getVatId() : $order->getBillingAddress()->getVatId(),
             'destCodeType' => 'DNI',
             'destEmail' => $order->getShippingAddress()->getEmail(),
             'destStreetName' => $street[0],
             'destStreetNumber' => isset($street[1]) ? $street[1] : '',
-            'destBuildingFloor' => isset($street[2]) ? $street[2] : '',
             'destZip' => $order->getShippingAddress()->getPostCode(),
             'destTown' => $order->getShippingAddress()->getCity(),
-            'destDepartmentId' => 610, //TODO: esperando lo de tiber
+            'destDepartmentId' => $this->regionLinkRepositoryInterface->getByMagentoRegionId($order->getShippingAddress()->getRegionId())->getBluemailRegionId(),
             'destCountryId' => Config::DEFAULT_COUNTRY,
             'destPhone' => $order->getShippingAddress()->getTelephone()
         ];
