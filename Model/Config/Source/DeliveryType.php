@@ -27,11 +27,11 @@ class DeliveryType implements OptionSourceInterface
     {
         return [
             [
-                'value' => '1',
+                'value' => 'SEND',
                 'label' => __('Send')
             ],
             [
-                'value' => '2',
+                'value' => 'PICKUP',
                 'label' => __('Pickup')
             ]
         ];

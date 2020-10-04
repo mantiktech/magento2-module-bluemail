@@ -14,8 +14,10 @@ use Magento\Quote\Model\Quote\Address\RateResult\MethodFactory;
 use Magento\Shipping\Model\Carrier\AbstractCarrier;
 use Magento\Shipping\Model\Carrier\CarrierInterface;
 use Magento\Shipping\Model\Rate\ResultFactory;
+use Mantik\Bluemail\Helper\Config;
+use  Mantik\Bluemail\Helper\Data;
 use Mantik\Bluemail\Model\BluemailApi\Estimates;
-use Psr\Log\LoggerInterface;
+use  Psr\Log\LoggerInterface;
 
 /**
  * Class Bluemail
@@ -44,9 +46,20 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
     protected $_rateMethodFactory;
 
     /**
+     * @var Data
+     */
+    protected $helper;
+
+    /**
      * @var Estimates
      */
     protected $estimates;
+
+    /**
+     * @var Config
+     */
+    protected $config;
+
     /**
      * Constructor
      *
@@ -56,6 +69,8 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
      * @param ResultFactory $rateResultFactory
      * @param MethodFactory $rateMethodFactory
      * @param Estimates $estimates
+     * @param Data $helper
+     * @param Config $config
      * @param array $data
      */
     public function __construct(
@@ -65,12 +80,15 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
         ResultFactory $rateResultFactory,
         MethodFactory $rateMethodFactory,
         Estimates $estimates,
+        Data $helper,
+        Config $config,
         array $data = []
     ) {
         $this->_rateResultFactory = $rateResultFactory;
         $this->_rateMethodFactory = $rateMethodFactory;
         $this->estimates = $estimates;
-
+        $this->helper = $helper;
+        $this->config = $config;
         parent::__construct($scopeConfig, $rateErrorFactory, $logger, $data);
     }
 
@@ -96,18 +114,20 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
             $result->append($method);
         } else {
             $this->estimates->execute(['destZip'=>$request->getDestPostcode(),
-                                       'Packages'=> $this->estimates->getPackages($request->getAllItems())
+                                       'Packages'=> $this->helper->getPackages($request->getAllItems())
                                       ]);
 
             $methods = $this->estimates->getResponse();
             if (!empty($methods['Prices'])) {
                 foreach ($methods['Prices'] as $item) {
-                    $method = $this->createMethod();
-                    $method->setMethodTitle($item['name']);
-                    $method->setMethod($item['code']);
-                    $method->setPrice($item['price']);
-                    $method->setCost($item['price']);
-                    $result->append($method);
+                    if (in_array($item['deliveryType'], explode(',', $this->config->getDeliveryType()))) {
+                        $method = $this->createMethod();
+                        $method->setMethodTitle($item['name']);
+                        $method->setMethod($item['code']);
+                        $method->setPrice($item['price']);
+                        $method->setCost($item['price']);
+                        $result->append($method);
+                    }
                 }
             }
         }
@@ -123,7 +143,8 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
     {
         return [$this->_code => $this->getConfigData('name')];
     }
-    private function createMethod(){
+    private function createMethod()
+    {
         $method = $this->_rateMethodFactory->create();
         $method->setCarrier($this->_code);
         return $method->setCarrierTitle($this->getConfigData('name'));
