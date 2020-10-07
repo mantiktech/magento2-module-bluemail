@@ -86,7 +86,7 @@ class Data extends AbstractHelper
             'destCodeType' => 'DNI',
             'destEmail' => $order->getShippingAddress()->getEmail(),
             'destStreetName' => $street[0],
-            'destStreetNumber' => isset($street[1]) ? $street[1] : '',
+            'destStreetNumber' => isset($street[1]) ? $street[1] : substr($street[0],strrpos($street[0], ' ')+1),
             'destZip' => $order->getShippingAddress()->getPostCode(),
             'destTown' => $order->getShippingAddress()->getCity(),
             'destDepartmentId' => $this->regionLinkRepositoryInterface->getByMagentoRegionId($order->getShippingAddress()->getRegionId())->getBluemailRegionId(),
