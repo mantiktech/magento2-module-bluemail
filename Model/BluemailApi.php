@@ -96,11 +96,13 @@ abstract class BluemailApi
         bool $includeClientId = true
     ): Response {
         $params = [
-
-            'headers' => $this->getHeaders(),
-            'query' => $this->getQueryParams($includeClientId)
+            'headers' => $this->getHeaders()
         ];
-
+        if ($requestMethod==Request::HTTP_METHOD_GET) {
+            $params['query'] =   $this->getQueryParams($includeClientId);
+        } else {
+            $params['body'] =   json_encode($this->getQueryParams($includeClientId));
+        }
         /** @var Client $client */
         $client = $this->clientFactory->create(
             [
@@ -175,5 +177,4 @@ abstract class BluemailApi
     {
         return json_decode($this->response, true);
     }
-
 }

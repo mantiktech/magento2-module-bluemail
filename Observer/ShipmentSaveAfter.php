@@ -61,16 +61,19 @@ class ShipmentSaveAfter implements ObserverInterface
 
             $this->delivery->execute($data);
             $response = $this->delivery->getResponse();
-            if (isset($response['trackingId'])) {
+            if (isset($response['Shipment']['trackingId'])) {
                 $tracking = [
                     'carrier_code' => $method,
                     'title' => __('Bluemail'),
-                    'number' => $response['trackingId']
+                    'number' => $response['Shipment']['trackingId']
 
                 ];
                 $track = $this->trackFactory->create()->addData($tracking);
-                $shipment->setLabel($response['labelUrl']);
+
+                $shipment->setShippingLabel($response['Shipment']['labelUrl']);
+
                 $shipment->addTrack($track)->save();
+
             }
         }
     }
