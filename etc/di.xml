@@ -9,4 +9,11 @@
     <preference for="Mantik\Bluemail\Api\RegionLinkRepositoryInterface" type="Mantik\Bluemail\Model\RegionLinkRepository"/>
     <preference for="Mantik\Bluemail\Api\Data\RegionLinkInterface" type="Mantik\Bluemail\Model\RegionLink"/>
     <preference for="Mantik\Bluemail\Api\Data\RegionLinkSearchResultsInterface" type="Mantik\Bluemail\Model\RegionLinkSearchResults"/>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="bluemail_shipping_grid_data_source" xsi:type="string">Mantik\Bluemail\Model\ResourceModel\Order\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
