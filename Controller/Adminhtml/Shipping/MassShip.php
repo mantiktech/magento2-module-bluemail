@@ -13,12 +13,10 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Magento\Sales\Controller\Adminhtml\Order\AbstractMassAction;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 use Magento\Ui\Component\MassAction\Filter;
+use Magento\Sales\Model\ShipOrder;
+use Magento\Sales\Model\Convert\Order;
 
-/**
- * Class MassShip, create shipments for selected items
- *
- * @package Magento\Sales\Controller\Adminhtml\Order
- */
+
 class MassShip extends AbstractMassAction implements HttpPostActionInterface
 {
     /**
@@ -27,19 +25,36 @@ class MassShip extends AbstractMassAction implements HttpPostActionInterface
     const ADMIN_RESOURCE = 'Mantik_Bluemail::mass_ship';
 
     /**
+     * @var \Magento\Sales\Model\ShipOrder
+     */
+    protected $shipOrderService;
+
+    /**
+     * @var \Magento\Sales\Model\Convert\Order
+     */
+    protected $orderConverter;
+
+    /**
      * Class constructor
      *
      * @param Context           $context
      * @param Filter            $filter
      * @param CollectionFactory $collectionFactory
+     * @param ShipOrder $shipOrderService
+     * @param Order $orderConverter
      */
+
     public function __construct(
         Context $context,
         Filter $filter,
-        CollectionFactory $collectionFactory
+        CollectionFactory $collectionFactory,
+        ShipOrder $shipOrderService,
+        Order $orderConverter
     ) {
         parent::__construct($context, $filter);
         $this->collectionFactory = $collectionFactory;
+        $this->shipOrderService = $shipOrderService;
+        $this->orderConverter = $orderConverter;
     }
 
     /**
@@ -51,7 +66,18 @@ class MassShip extends AbstractMassAction implements HttpPostActionInterface
     protected function massAction(AbstractCollection $collection)
     {
         foreach ($collection->getItems() as $order) {
-            //TODO All yours @jorgevenzon
+            if ($order->canShip()) {
+                try {
+                    $orderId = $order->getId();
+                    $shippedItems = $this->createShipmentItems($order);
+                    //creates shipment
+                    $this->shipOrderService->execute($orderId, $shippedItems);
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                }
+
+
+            }
         }
 
         $resultRedirect = $this->resultRedirectFactory->create();
@@ -67,5 +93,26 @@ class MassShip extends AbstractMassAction implements HttpPostActionInterface
     protected function _isAllowed()
     {
         return true;
+    }
+
+    /**
+     * Create shipment items required to create shipment.
+     *
+     * @param \Magento\Sales\Model\Order $order
+     *
+     * @return array
+     */
+    protected function createShipmentItems($order)
+    {
+        $shipmentItem = [];
+        foreach ($order->getAllItems() as $orderItem) {
+
+            $shipmentItem[] = $this->orderConverter
+                ->itemToShipmentItem($orderItem)
+                ->setQty($orderItem->getQtyOrdered());
+
+        }
+
+        return $shipmentItem;
     }
 }
