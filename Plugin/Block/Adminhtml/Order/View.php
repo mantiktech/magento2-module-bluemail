@@ -15,7 +15,7 @@ class View
             $shipment = $order->getShipmentsCollection()->getFirstItem()->getShippingLabel();
             $subject->addButton(
                 'bluemail_pdf',
-                ['label' => __('Generate bluemail label'), 'onclick' => "window.open('$shipment' , '_blank')"]
+                ['label' => __('Print bluemail label'), 'onclick' => "window.open('$shipment' , '_blank')"]
             );
         }
         return null;

@@ -63,7 +63,7 @@
         </massaction>
         <paging name="listing_paging"/>
     </listingToolbar>
-    <columns name="bluemail_shipping_columns">
+    <columns name="bluemail_shipping_columns" >
         <settings>
             <childDefaults>
                 <param name="fieldAction" xsi:type="array">
@@ -210,7 +210,7 @@
                 <visible>false</visible>
             </settings>
         </column>
-        <actionsColumn name="actions" class="Magento\Sales\Ui\Component\Listing\Column\ViewAction">
+        <actionsColumn name="actions" class="Mantik\Bluemail\Ui\Component\Listing\Columns\BluemailActions" >
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="viewUrlPath" xsi:type="string">sales/order/view</item>
