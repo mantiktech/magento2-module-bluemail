@@ -16,4 +16,7 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\View">
+        <plugin name="addBluemailButton" type="Mantik\Bluemail\Plugin\Block\Adminhtml\Order\View"/>
+    </type>
 </config>
