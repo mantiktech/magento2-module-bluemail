@@ -61,20 +61,27 @@ abstract class BluemailApi
      * @var string
      */
     protected $status;
+
+    private $logger;
+
+
     /**
      * BluemailApi constructor.
      * @param ClientFactory $clientFactory
      * @param ResponseFactory $responseFactory
      * @param Config $configHelper
+     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         ClientFactory $clientFactory,
         ResponseFactory $responseFactory,
-        Config $configHelper
+        Config $configHelper,
+        \Psr\Log\LoggerInterface $logger
     ) {
         $this->clientFactory = $clientFactory;
         $this->responseFactory = $responseFactory;
         $this->configHelper = $configHelper;
+        $this->logger = $logger;
         $this->headers = [];
         $this->bodyParam = [];
     }
@@ -109,7 +116,7 @@ abstract class BluemailApi
                 'config' => [ 'base_uri' => $this->configHelper->getApiUrl() ]
             ]
         );
-
+        $this->logger->info(print_r($params,true));
         try {
             $response = $client->request(
                 $requestMethod,
@@ -119,12 +126,14 @@ abstract class BluemailApi
             $this->setStatus($response->getStatusCode());
             $responseBody = $response->getBody();
             $this->response = $responseBody->getContents();
+            $this->logger->info($this->response);
         } catch (GuzzleException $exception) {
             /** @var Response $response */
             $response = $this->responseFactory->create([
                 'status' => $exception->getCode(),
                 'reason' => $exception->getMessage()
             ]);
+            $this->logger->error($exception->getMessage());
         }
 
         return $response;
