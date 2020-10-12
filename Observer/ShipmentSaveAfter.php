@@ -48,10 +48,6 @@ class ShipmentSaveAfter implements ObserverInterface
 
         if (str_contains($method, self::code)) {
 
-
-
-
-
             $data = ["shipment" =>[
                  'serviceCode' => $method,
                  'packages' => $this->helper->getPackages($shipment->getAllItems()),
@@ -59,6 +55,7 @@ class ShipmentSaveAfter implements ObserverInterface
                 ]
             ];
 
+            $this->delivery->reset();
             $this->delivery->execute($data);
             $response = $this->delivery->getResponse();
             if (isset($response['Shipment']['trackingId'])) {
