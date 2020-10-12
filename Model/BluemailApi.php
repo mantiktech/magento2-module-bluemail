@@ -116,7 +116,7 @@ abstract class BluemailApi
                 'config' => [ 'base_uri' => $this->configHelper->getApiUrl() ]
             ]
         );
-        $this->logger->info(json_encode($this->getQueryParams($includeClientId)));
+        $this->logger->info(print_r($params,true));
         try {
             $response = $client->request(
                 $requestMethod,
