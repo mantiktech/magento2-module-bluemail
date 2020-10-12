@@ -81,14 +81,16 @@ class Data extends AbstractHelper
     {
         $street = $order->getShippingAddress()->getStreet();
         $dni = $order->getShippingAddress()->getVatId() ? $order->getShippingAddress()->getVatId() : $order->getBillingAddress()->getVatId();
-        if(empty($dni)){ $dni = $order->getVatId(); }
+        if (empty($dni)) {
+            $dni = $order->getVatId();
+        }
         return [
             'destName' => $order->getShippingAddress()->getName(),
             'destCode' => $dni,
             'destCodeType' => 'DNI',
             'destEmail' => $order->getShippingAddress()->getEmail(),
             'destStreetName' => $street[0],
-            'destStreetNumber' => isset($street[1]) ? $street[1] : substr($street[0],strrpos($street[0], ' ')+1),
+            'destStreetNumber' => isset($street[1]) ? $street[1] : substr($street[0], strrpos($street[0], ' ')+1),
             'destZip' => $order->getShippingAddress()->getPostCode(),
             'destTown' => $order->getShippingAddress()->getCity(),
             'destDepartmentId' => $this->regionLinkRepositoryInterface->getByMagentoRegionId($order->getShippingAddress()->getRegionId())->getBluemailRegionId(),
