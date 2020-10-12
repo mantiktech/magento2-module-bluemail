@@ -64,7 +64,6 @@ abstract class BluemailApi
 
     private $logger;
 
-
     /**
      * BluemailApi constructor.
      * @param ClientFactory $clientFactory
@@ -87,6 +86,12 @@ abstract class BluemailApi
     }
 
     abstract public function execute($data);
+
+    public function reset()
+    {
+        $this->headers = [];
+        $this->bodyParam = [];
+    }
 
     /**
      * Do API request with provided params
@@ -116,7 +121,7 @@ abstract class BluemailApi
                 'config' => [ 'base_uri' => $this->configHelper->getApiUrl() ]
             ]
         );
-        $this->logger->info(print_r($params,true));
+        $this->logger->info(print_r($params, true));
         try {
             $response = $client->request(
                 $requestMethod,
