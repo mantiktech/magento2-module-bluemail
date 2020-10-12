@@ -87,7 +87,7 @@ abstract class BluemailApi
 
     abstract public function execute($data);
 
-    public function reset()
+    public function cleanData()
     {
         $this->headers = [];
         $this->bodyParam = [];
