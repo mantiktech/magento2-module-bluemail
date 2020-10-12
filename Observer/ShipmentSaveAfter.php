@@ -8,7 +8,6 @@ use Magento\Framework\Event\Observer as EventObserver;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Model\Order\Shipment\TrackFactory;
 use Mantik\Bluemail\Helper\Data;
-use Mantik\Bluemail\Helper\Config;
 use  Mantik\Bluemail\Model\BluemailApi\Delivery;
 
 /**
@@ -46,8 +45,7 @@ class ShipmentSaveAfter implements ObserverInterface
 
         $method = substr($order->getShippingMethod(), strpos($order->getShippingMethod(), '_')+1);
 
-        if (str_contains($method, self::code)) {
-
+        if (str_contains($method, self::code) && empty($shipment->getShippingLabel())) {
             $data = ["shipment" =>[
                  'serviceCode' => $method,
                  'packages' => $this->helper->getPackages($shipment->getAllItems()),
@@ -55,7 +53,7 @@ class ShipmentSaveAfter implements ObserverInterface
                 ]
             ];
 
-            $this->delivery->reset();
+            $this->delivery->cleanData();
             $this->delivery->execute($data);
             $response = $this->delivery->getResponse();
             if (isset($response['Shipment']['trackingId'])) {
@@ -70,7 +68,6 @@ class ShipmentSaveAfter implements ObserverInterface
                 $shipment->setShippingLabel($response['Shipment']['labelUrl']);
 
                 $shipment->addTrack($track)->save();
-
             }
         }
     }
