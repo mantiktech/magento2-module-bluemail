@@ -114,6 +114,10 @@
                     <label>Region Linking</label>
                     <frontend_model>Mantik\Bluemail\Block\Adminhtml\System\Config\Form\Field\RegionLinkingLink</frontend_model>
                 </field>
+                <field id="debugger" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="9999" translate="label" type="select">
+                    <label>Enable debugging</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
 			</group>
 		</section>
 	</system>

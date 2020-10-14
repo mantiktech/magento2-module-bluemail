@@ -11,7 +11,8 @@ declare(strict_types=1);
 namespace Mantik\Bluemail\Model\Config\Source;
 
 use Magento\Eav\Api\Data\AttributeInterface;
-use Magento\Eav\Model\ResourceModel\Entity\Attribute\Collection;
+
+use Magento\Catalog\Model\ResourceModel\Product\Attribute\CollectionFactory;
 use Magento\Framework\Data\OptionSourceInterface;
 
 /**
@@ -22,25 +23,19 @@ class Attributes implements OptionSourceInterface
     const FRONTEND_INPUT_TYPE_SELECT = 'text';
 
     /**
-     * @var Collection
+     * @var CollectionFactory
      */
-    private $attributeCollection;
-
-    /**
-     * @var $attributeFilterValue
-     */
-    private $attributeFilterValue;
+    private $collectionFactory;
 
     /**
      * Attributes constructor.
      *
-     * @param Collection $attributeCollection
+     * @param CollectionFactory $collectionFactory
      */
     public function __construct(
-        Collection $attributeCollection
+        CollectionFactory $collectionFactory
     ) {
-        $this->attributeCollection = $attributeCollection;
-        $this->attributeFilterValue = self::FRONTEND_INPUT_TYPE_SELECT;
+        $this->collectionFactory = $collectionFactory;
     }
 
     /**
@@ -48,13 +43,20 @@ class Attributes implements OptionSourceInterface
      *
      * @return array
      */
-    public function getAllAttributes()
+    public function getAttributes()
     {
-        $this->attributeCollection->addFieldToFilter(
-            AttributeInterface::FRONTEND_INPUT, $this->attributeFilterValue
+        $collection = $this->collectionFactory->create();
+        $collection->addFieldToFilter(
+            AttributeInterface::FRONTEND_INPUT, self::FRONTEND_INPUT_TYPE_SELECT
         );
 
-        return $this->attributeCollection->load()->getData();;
+        $attributesArray = array();
+
+        foreach ($collection as $items) {
+            $attributesArray[] = $items->getData();
+        }
+
+        return $attributesArray;
     }
 
     /**
@@ -64,7 +66,7 @@ class Attributes implements OptionSourceInterface
      */
     public function toOptionArray()
     {
-        $attributesArray  = $this->getAllAttributes();
+        $attributesArray  = $this->getAttributes();
         $options = array(['value' => '', 'label' => __('Select an attribute ...')]);
 
         foreach ($attributesArray as $key => $value) {
