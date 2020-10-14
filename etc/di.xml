@@ -19,4 +19,22 @@
     <type name="Magento\Sales\Block\Adminhtml\Order\View">
         <plugin name="addBluemailButton" type="Mantik\Bluemail\Plugin\Block\Adminhtml\Order\View"/>
     </type>
+    <type name="Mantik\Bluemail\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Mantik\Bluemail\Logger\Handler\System">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Mantik\Bluemail\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">bluemail</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Mantik\Bluemail\Logger\Handler\System</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
