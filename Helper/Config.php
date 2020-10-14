@@ -31,6 +31,7 @@ class Config extends AbstractHelper
      */
     const CONFIG_MODULE_ENABLED = self::SECTION . self::GROUP . 'active';
     const CONFIG_SANDBOX_ENABLED = self::SECTION . self::GROUP . 'sandboxmode';
+    const CONFIG_DEBUGGER_ENABLED = self::SECTION . self::GROUP . 'debugger';
 
     const CONFIG_METHOD_NAME = self::SECTION . self::GROUP . 'name';
 
@@ -220,6 +221,16 @@ class Config extends AbstractHelper
     public function getIvaTaxCalculate()
     {
         return $this->getConfigValue(self::CONFIG_IVA_CALCULATE);
+    }
+
+    /**
+     * Get Debugger State
+     *
+     * @return mixed
+     */
+    public function getDebuggerState()
+    {
+        return $this->getConfigValue(self::CONFIG_DEBUGGER_ENABLED);
     }
 
     /**

@@ -27,6 +27,7 @@
                 <weightunit/>
                 <specificerrmsg>- Working -</specificerrmsg>
 				<sallowspecific>0</sallowspecific>
+				<debugger/>
 			</bluemail>
 		</carriers>
 	</default>
