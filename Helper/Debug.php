@@ -43,14 +43,12 @@ class Debug extends AbstractHelper
      * @param array $message
      * @param string $name
      */
-    public function log($message, $name = "bluemail")
+    public function log(array $message, string $name = "bluemail")
     {
-        $actionLog = $this->_configHelper->getDebuggerState();
-        if (!$actionLog) {
+        if (!$this->_configHelper->getDebuggerState()) {
             return;
         }
-        $logMessage = json_encode($message);
         $this->_logger->setName($name);
-        $this->_logger->debug($logMessage);
+        $this->_logger->debug(json_encode($message));
     }
 }

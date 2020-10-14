@@ -12,10 +12,15 @@ use Monolog\Logger as Monolog;
 class Logger extends Monolog
 {
     /**
-     * Set logger name
-     * @param $name
+     * @var string
      */
-    public function setName($name)
+    protected $name;
+
+    /**
+     * Set logger name
+     * @param string $name
+     */
+    public function setName(string $name)
     {
         $this->name = $name;
     }
