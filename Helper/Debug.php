@@ -14,6 +14,9 @@ use Mantik\Bluemail\Logger\Logger;
 
 class Debug extends AbstractHelper
 {
+    /**
+     * @var Logger
+     */
     protected $_logger;
     /**
      * @var Config
