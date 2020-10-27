@@ -119,7 +119,7 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
 
             $methods = $this->estimates->getResponse();
             if (!empty($methods['Prices'])) {
-                $iva=($this->config->getIvaTaxCalculate())?21:1;
+                $iva=($this->config->getIvaTaxCalculate()) ? floatval(1.21) : 1;
 
                 foreach ($methods['Prices'] as $item) {
                     if (in_array($item['deliveryType'], explode(',', $this->config->getDeliveryType()))) {
