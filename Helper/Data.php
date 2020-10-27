@@ -80,7 +80,7 @@ class Data extends AbstractHelper
     public function getDestination($order)
     {
         $street = $order->getShippingAddress()->getStreet();
-        $dni = $order->getShippingAddress()->getVatId() ? $order->getShippingAddress()->getVatId() : $order->getBillingAddress()->getVatId();
+        $dni = !empty($order->getShippingAddress()->getVatId()) ? $order->getShippingAddress()->getVatId() : $order->getBillingAddress()->getVatId();
         if (empty($dni)) {
             $dni = $order->getVatId();
         }
