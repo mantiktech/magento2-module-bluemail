@@ -56,13 +56,13 @@ class Data extends AbstractHelper
             $product= empty($item->getProduct()) ? $this->productFactory->create()->load($item->getProductId()) : $item->getProduct();
 
             if ($this->configHelper->getSizeHeightAttributeId()) {
-                $height = $product->getResource()->getAttributeRawValue($product->getId(), $this->configHelper->getSizeHeightAttributeId(), $this->storeManager->getStore()->getId());
+                $height = (float)$product->getResource()->getAttributeRawValue($product->getId(), $this->configHelper->getSizeHeightAttributeId(), $this->storeManager->getStore()->getId());
             }
             if ($this->configHelper->getSizeHeightAttributeId()) {
-                $width = $product->getResource()->getAttributeRawValue($product->getId(), $this->configHelper->getSizeWidthAttributeId(), $this->storeManager->getStore()->getId());
+                $width = (float)$product->getResource()->getAttributeRawValue($product->getId(), $this->configHelper->getSizeWidthAttributeId(), $this->storeManager->getStore()->getId());
             }
             if ($this->configHelper->getSizeHeightAttributeId()) {
-                $depth = $product->getResource()->getAttributeRawValue($product->getId(), $this->configHelper->getSizeDepthAttributeId(), $this->storeManager->getStore()->getId());
+                $depth = (float)$product->getResource()->getAttributeRawValue($product->getId(), $this->configHelper->getSizeDepthAttributeId(), $this->storeManager->getStore()->getId());
             }
             $package[]=[
                 "weight"=> $this->weightToKg($item->getWeight()),
@@ -70,7 +70,7 @@ class Data extends AbstractHelper
                 "sizeHeight"=> round($height/100, 2),
                 "sizeWidth"=> round($width/100, 2),
                 "sizeDepth"=> round($depth/100, 2),
-                "declaredValue"=> $item->getPrice(),
+                "declaredValue"=> $item->getPrice()*$item->getQty(),
                 "quantity" => $item->getQty()
             ];
         }

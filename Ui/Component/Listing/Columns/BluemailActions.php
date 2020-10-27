@@ -11,6 +11,7 @@ use Magento\Ui\Component\Listing\Columns\Column;
 
 class BluemailActions extends Column
 {
+    const URL_PDF = 'http://envios.bluemailbox.com.ar/';
     /**
      * @var UrlInterface
      */
@@ -81,7 +82,7 @@ class BluemailActions extends Column
                             if (!empty($shipment->getShippingLabel())) {
                                 $item[$this->getData('name')][$shipment->getId()] =
                                      [
-                                        'href' => $shipment->getShippingLabel(),
+                                        'href' => self::URL_PDF, //$shipment->getShippingLabel()
                                         'target' => '_blank',
                                         'label' => __('Print') . ' ' . array_first($shipment->getTracks())->getTRackNumber()
                                     ];

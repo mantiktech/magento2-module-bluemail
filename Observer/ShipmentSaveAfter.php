@@ -20,6 +20,7 @@ class ShipmentSaveAfter implements ObserverInterface
      * @var string
      */
     const code = 'bluemail';
+    const URL_TRACKING = 'http://envios.bluemailbox.com.ar/portal/envio/fiche.php?';
     protected $helper;
     protected $delivery;
     protected $trackFactory;
@@ -49,7 +50,9 @@ class ShipmentSaveAfter implements ObserverInterface
             $data = ["shipment" =>[
                  'serviceCode' => $method,
                  'packages' => $this->helper->getPackages($shipment->getAllItems()),
-                 'destination' => $this->helper->getDestination($order)
+                 'destination' => $this->helper->getDestination($order),
+                 'customerTrackingID' => $shipment->getIncrementId(),
+                 'comments' => $order->getData('bluemail_notes')
                 ]
             ];
 
@@ -58,14 +61,15 @@ class ShipmentSaveAfter implements ObserverInterface
             $response = $this->delivery->getResponse();
             if (isset($response['Shipment']['trackingId'])) {
                 $tracking = [
-                    'carrier_code' => $method,
+                    'carrier_code' => self::code,
                     'title' => __('Bluemail'),
-                    'number' => $response['Shipment']['trackingId']
+                    'number' => $response['Shipment']['trackingId'],
+                    'carrier' => self::code
 
                 ];
                 $track = $this->trackFactory->create()->addData($tracking);
 
-                $shipment->setShippingLabel($response['Shipment']['labelUrl']);
+                $shipment->setShippingLabel(self::URL_TRACKING . $response['Shipment']['id']);
 
                 $shipment->addTrack($track)->save();
             }

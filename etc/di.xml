@@ -19,4 +19,7 @@
     <type name="Magento\Sales\Block\Adminhtml\Order\View">
         <plugin name="addBluemailButton" type="Mantik\Bluemail\Plugin\Block\Adminhtml\Order\View"/>
     </type>
+    <type name="Magento\Checkout\Model\ShippingInformationManagement">
+        <plugin name="save_custom_notes_in_quote" type="Mantik\Bluemail\Plugin\Checkout\Model\ShippingInformationManagement" sortOrder="1"/>
+    </type>
 </config>
