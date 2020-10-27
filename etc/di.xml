@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright ©  2020. Mantik Tech.  All rights reserved under CC BY-NC-SA 4.0 licence.
+  ~ See LICENSE file for more details.
+  ~ @link https://www.mantik.tech/
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Mantik\Bluemail\Api\RegionLinkRepositoryInterface" type="Mantik\Bluemail\Model\RegionLinkRepository"/>
+    <preference for="Mantik\Bluemail\Api\Data\RegionLinkInterface" type="Mantik\Bluemail\Model\RegionLink"/>
+    <preference for="Mantik\Bluemail\Api\Data\RegionLinkSearchResultsInterface" type="Mantik\Bluemail\Model\RegionLinkSearchResults"/>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="bluemail_shipping_grid_data_source" xsi:type="string">Mantik\Bluemail\Model\ResourceModel\Order\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\View">
+        <plugin name="addBluemailButton" type="Mantik\Bluemail\Plugin\Block\Adminhtml\Order\View"/>
+    </type>
+    <type name="Magento\Checkout\Model\ShippingInformationManagement">
+        <plugin name="save_custom_notes_in_quote" type="Mantik\Bluemail\Plugin\Checkout\Model\ShippingInformationManagement" sortOrder="1"/>
+    </type>
+</config>

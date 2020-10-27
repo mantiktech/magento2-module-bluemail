@@ -1,0 +1,17 @@
+<?php
+/** @var \Mantik\Bluemail\Block\Adminhtml\Region\GridSerializer $block */
+?>
+<input type="hidden" name="region_links" id="region_links" data-form-part="edit_form" value=""/>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Mantik_Bluemail/region/grid/grid-serializer": {
+                "regionLinks": <?= /* @noEscape */ $block->getRegionLinksJson() ?>,
+                "gridJsObjectName": <?= /* @noEscape */ '"' . $block->getGridJsObjectName() . '"' ?: '{}' ?>
+            }
+        }
+    }
+</script>
+<script>
+    require('mage/apply/main').apply();
+</script>

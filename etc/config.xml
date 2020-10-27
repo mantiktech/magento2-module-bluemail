@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<!--
+  ~ Copyright ©  2020. Mantik Tech.  All rights reserved under CC BY-NC-SA 4.0 licence.
+  ~ See LICENSE file for more details.
+  ~ @link https://www.mantik.tech/
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<carriers>
+			<bluemail>
+				<model>Mantik\Bluemail\Model\Carrier\Bluemail</model>
+				<active>0</active>
+				<title>Bluemail</title>
+				<name>Bluemail</name>
+				<token/>
+				<customerid/>
+				<sandboxmode/>
+                <sandboxapiurl>https://api-test.bluemailbox.com.ar/v1/</sandboxapiurl>
+                <productionapiurl>https://api.bluemailbox.com.ar/v1/</productionapiurl>
+                <deliverytype/>
+                <depositid/>
+                <ivacalculate/>
+                <sizeheight/>
+                <sizewidth/>
+                <sizedepth/>
+                <weightunit/>
+                <specificerrmsg>- Working -</specificerrmsg>
+				<sallowspecific>0</sallowspecific>
+				<debugger/>
+			</bluemail>
+		</carriers>
+	</default>
+</config>

@@ -1,0 +1,129 @@
+<?xml version="1.0" ?>
+<!--
+  ~ Copyright ©  2020. Mantik Tech.  All rights reserved under CC BY-NC-SA 4.0 licence.
+  ~ See LICENSE file for more details.
+  ~ @link https://www.mantik.tech/
+  -->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<section id="carriers" showInDefault="1" showInStore="1" showInWebsite="1" translate="label">
+			<group id="bluemail" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label>Bluemail</label>
+				<field id="active" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label>Enabled</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="name" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="text">
+					<label>Method Name</label>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label" type="text">
+					<label>Sort Order</label>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label" type="text">
+					<label>Title</label>
+				</field>
+                <field id="sandboxmode" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label" type="select">
+                    <label>Sandbox Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="sandboxapiurl" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="71" translate="label" type="text" canRestore="1">
+                    <label>Sandbox Api URL</label>
+                    <depends>
+                        <field id="sandboxmode">1</field>
+                    </depends>
+                </field>
+                <field id="sandboxtoken" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="72" translate="label" type="password">
+                    <label>Sandbox X-Midla-App-Token</label>
+                    <depends>
+                        <field id="sandboxmode">1</field>
+                    </depends>
+                </field>
+                <field id="sandboxcustomerid" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="73" translate="label" type="password">
+                    <label>Sandbox Customer ID</label>
+                    <depends>
+                        <field id="sandboxmode">1</field>
+                    </depends>
+                </field>
+                <field id="productionapiurl" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="74" translate="label" type="text" canRestore="1">
+                    <label>Production Api URL</label>
+                    <depends>
+                        <field id="sandboxmode">0</field>
+                    </depends>
+                </field>
+                <field id="productiontoken" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="75" translate="label" type="password">
+                    <label>Production X-Midla-App-Token</label>
+                    <depends>
+                        <field id="sandboxmode">0</field>
+                    </depends>
+                </field>
+                <field id="productioncustomerid" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="76" translate="label" type="password">
+                    <label>Production Customer ID</label>
+                    <depends>
+                        <field id="sandboxmode">0</field>
+                    </depends>
+                </field>
+                <field id="deliverytype" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+                    <label>Delivery Type</label>
+                    <comment/>
+                    <source_model>Mantik\Bluemail\Model\Config\Source\DeliveryType</source_model>
+                </field>
+                <field id="depositid" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label" type="select">
+                    <label>Deposit / Store</label>
+                    <comment/>
+                    <source_model>Mantik\Bluemail\Model\Config\Source\Deposits</source_model>
+                </field>
+                <field id="ivacalculate" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+                    <label>Add IVA to shipping calculation</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="sizeheight" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label" type="select">
+                    <label>Height Attribute</label>
+                    <comment/>
+                    <source_model>Mantik\Bluemail\Model\Config\Source\Attributes</source_model>
+                </field>
+                <field id="sizewidth" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="91" translate="label" type="select">
+                    <label>Width Attribute</label>
+                    <comment/>
+                    <source_model>Mantik\Bluemail\Model\Config\Source\Attributes</source_model>
+                </field>
+                <field id="sizedepth" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="92" translate="label" type="select">
+                    <label>Depth Attribute</label>
+                    <comment/>
+                    <source_model>Mantik\Bluemail\Model\Config\Source\Attributes</source_model>
+                </field>
+                <field id="weightunit" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="93" translate="label" type="select">
+                    <label>Weight Unit</label>
+                    <comment/>
+                    <source_model>Mantik\Bluemail\Model\Config\Source\WeightUnit</source_model>
+                </field>
+				<field id="sallowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label" type="select">
+					<label>Ship to Applicable Countries</label>
+					<frontend_class>shipping-applicable-country</frontend_class>
+					<source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="110" translate="label" type="multiselect">
+					<label>Ship to Specific Countries</label>
+					<can_be_empty>1</can_be_empty>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="specificerrmsg" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="120" translate="label" type="textarea">
+					<label>Displayed Error Message</label>
+				</field>
+                <field id="region_linking_link" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="130" translate="label" type="label">
+                    <label>Region Linking</label>
+                    <frontend_model>Mantik\Bluemail\Block\Adminhtml\System\Config\Form\Field\RegionLinkingLink</frontend_model>
+                </field>
+                <field id="debugger" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="140" translate="label" type="select">
+                    <label>Enable debugging</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="documentation" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label" type="label">
+                    <label>Information</label>
+                    <frontend_model>Mantik\Bluemail\Block\Adminhtml\System\Config\Form\Field\DocumentationLink</frontend_model>
+
+                </field>
+			</group>
+		</section>
+	</system>
+</config>
