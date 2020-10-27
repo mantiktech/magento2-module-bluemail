@@ -24,14 +24,17 @@ define(
         selectBillingAddressAction
     ) {
         'use strict';
-        $(document).on("click", '#checkout-shipping-method-load tr.row', function() {
 
+
+        $(document).on("click", '#checkout-shipping-method-load tr.row', function() {
             if($(this).find('.radio').val().indexOf('bluemail')!=-1){
+                $('[name="shippingAddress.custom_attributes.bluemail_notes"]').appendTo($('#checkout-shipping-method-load'));
                 $('[name="shippingAddress.custom_attributes.bluemail_notes"]').css('display','block');
             }else{
                 $('[name="shippingAddress.custom_attributes.bluemail_notes"]').css('display','none');
             }
         });
+
 
         return {
             saveShippingInformation: function () {
