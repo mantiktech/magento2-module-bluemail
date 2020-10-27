@@ -82,7 +82,7 @@ class Data extends AbstractHelper
         $street = $order->getShippingAddress()->getStreet();
         $dni = !empty($order->getShippingAddress()->getVatId()) ? $order->getShippingAddress()->getVatId() : $order->getBillingAddress()->getVatId();
         if (empty($dni)) {
-            $dni = $order->getVatId();
+            $dni = $order->getData('customer_taxvat');
         }
         return [
             'destName' => $order->getShippingAddress()->getName(),
