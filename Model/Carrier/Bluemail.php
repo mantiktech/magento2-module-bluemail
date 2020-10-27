@@ -149,4 +149,9 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
         $method->setCarrier($this->_code);
         return $method->setCarrierTitle($this->getConfigData('name'));
     }
+
+    public function isTrackingAvailable()
+    {
+        return true;
+    }
 }

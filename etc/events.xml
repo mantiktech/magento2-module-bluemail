@@ -9,4 +9,7 @@
     <event name="sales_order_shipment_save_after">
         <observer name="bluemail_send_shipment" instance="Mantik\Bluemail\Observer\ShipmentSaveAfter"/>
     </event>
+    <event name="sales_model_service_quote_submit_before">
+        <observer name="extra_shipping_cost" instance="Mantik\Bluemail\Observer\SaveOrderObserver" />
+    </event>
 </config>
