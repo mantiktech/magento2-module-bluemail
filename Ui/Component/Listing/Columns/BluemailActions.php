@@ -80,11 +80,12 @@ class BluemailActions extends Column
                     if (!empty($order) && $order->getShipmentsCollection()->getSize() > 0) {
                         foreach ($order->getShipmentsCollection() as $shipment) {
                             if (!empty($shipment->getShippingLabel())) {
+                                $tracks = $shipment->getTracks();
                                 $item[$this->getData('name')][$shipment->getId()] =
                                      [
                                         'href' => self::URL_PDF, //$shipment->getShippingLabel()
                                         'target' => '_blank',
-                                        'label' => __('Print') . ' ' . array_first($shipment->getTracks())->getTRackNumber()
+                                        'label' => __('Print') . ' ' . reset($tracks)->getTrackNumber()
                                     ];
 
                             }
