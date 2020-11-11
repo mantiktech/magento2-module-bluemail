@@ -17,11 +17,12 @@ class Debug extends AbstractHelper
     /**
      * @var Logger
      */
-    protected Logger $logger;
+    protected $logger;
+
     /**
      * @var Config
      */
-    private Config $configHelper;
+    private $configHelper;
 
     /**
      * Debug constructor.
