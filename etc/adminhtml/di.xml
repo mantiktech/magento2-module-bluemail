@@ -9,4 +9,7 @@
     <type name="Magento\Sales\Block\Adminhtml\Order\View">
         <plugin name="addBluemailButton" type="Mantik\Bluemail\Plugin\Block\Adminhtml\Order\View"/>
     </type>
+    <type name="Magento\Shipping\Block\Adminhtml\View\Form">
+        <plugin name="bluemail_print_label" type="Mantik\Bluemail\Plugin\Block\Adminhtml\Shipping\View\Form" sortOrder="1"/>
+    </type>
 </config>

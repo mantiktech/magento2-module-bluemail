@@ -17,11 +17,11 @@ class Debug extends AbstractHelper
     /**
      * @var Logger
      */
-    protected $_logger;
+    protected Logger $logger;
     /**
      * @var Config
      */
-    private $_configHelper;
+    private Config $configHelper;
 
     /**
      * Debug constructor.
@@ -33,25 +33,24 @@ class Debug extends AbstractHelper
         Context $context,
         ConfigHelper $configHelper,
         Logger $logger
-    )
-    {
+    ) {
+        $this->configHelper = $configHelper;
+        $this->logger = $logger;
         parent::__construct($context);
-        $this->_configHelper = $configHelper;
-        $this->_logger = $logger;
     }
 
     /**
      * Log custom message using Bluemail logger instance
      *
-     * @param array $message
-     * @param string $name
+     * @param mixed $message
+     * @param mixed $name
      */
-    public function log(array $message, string $name = "bluemail")
+    public function log($message, $name="bluemail")
     {
-        if (!$this->_configHelper->getDebuggerState()) {
+        if (!$this->configHelper->getDebuggerState()) {
             return;
         }
-        $this->_logger->setName($name);
-        $this->_logger->debug(json_encode($message));
+        $this->logger->setName($name);
+        $this->logger->debug(json_encode($message));
     }
 }

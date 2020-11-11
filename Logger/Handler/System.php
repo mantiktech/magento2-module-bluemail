@@ -14,5 +14,5 @@ class System extends Base
 {
     protected $loggerType = Logger::DEBUG;
 
-    protected $fileName = '/var/log/bluemail.log';
+    protected $fileName = '/var/log/bluemail_debug.log';
 }

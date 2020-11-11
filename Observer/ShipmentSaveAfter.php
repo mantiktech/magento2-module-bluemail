@@ -7,6 +7,7 @@ namespace Mantik\Bluemail\Observer;
 use Magento\Framework\Event\Observer as EventObserver;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Sales\Model\Order\Shipment\TrackFactory;
+use Mantik\Bluemail\Helper\Config;
 use Mantik\Bluemail\Helper\Data;
 use  Mantik\Bluemail\Model\BluemailApi\Delivery;
 
@@ -19,20 +20,23 @@ class ShipmentSaveAfter implements ObserverInterface
     /**
      * @var string
      */
-    const code = 'bluemail';
-    const URL_TRACKING = 'http://envios.bluemailbox.com.ar/portal/envio/fiche.php?';
+    const URL_TRACKING = 'portal/envio/fiche.php?';
+
     protected $helper;
+    protected $config;
     protected $delivery;
     protected $trackFactory;
 
     public function __construct(
         Delivery $delivery,
         Data $helper,
-        TrackFactory $trackFactory
+        TrackFactory $trackFactory,
+        Config $config
     ) {
         $this->delivery = $delivery;
         $this->helper = $helper;
         $this->trackFactory = $trackFactory;
+        $this->config = $config;
     }
 
     /**
@@ -46,7 +50,7 @@ class ShipmentSaveAfter implements ObserverInterface
 
         $method = substr($order->getShippingMethod(), strpos($order->getShippingMethod(), '_')+1);
 
-        if (str_contains($method, self::code) && empty($shipment->getShippingLabel())) {
+        if (str_contains($method, \Mantik\Bluemail\Helper\Config::BLUEMAIL_CODE) && empty($shipment->getShippingLabel())) {
             $data = ["shipment" =>[
                  'serviceCode' => $method,
                  'packages' => $this->helper->getPackages($shipment->getAllItems()),
@@ -61,15 +65,15 @@ class ShipmentSaveAfter implements ObserverInterface
             $response = $this->delivery->getResponse();
             if (isset($response['Shipment']['trackingId'])) {
                 $tracking = [
-                    'carrier_code' => self::code,
+                    'carrier_code' => \Mantik\Bluemail\Helper\Config::BLUEMAIL_CODE,
                     'title' => __('Bluemail'),
                     'number' => $response['Shipment']['trackingId'],
-                    'carrier' => self::code
+                    'carrier' => \Mantik\Bluemail\Helper\Config::BLUEMAIL_CODE
 
                 ];
                 $track = $this->trackFactory->create()->addData($tracking);
-
-                $shipment->setShippingLabel(self::URL_TRACKING . $response['Shipment']['id']);
+                $url = $this->config->getBlueMailUrl() . self::URL_TRACKING;
+                $shipment->setShippingLabel($url . $response['Shipment']['id']);
 
                 $shipment->addTrack($track)->save();
             }

@@ -2,20 +2,30 @@
 
 namespace Mantik\Bluemail\Plugin\Block\Adminhtml\Order;
 
+
+use Mantik\Bluemail\Helper\Config;
+
 class View
 {
-    const code = 'bluemail';
-    const URL_PDF = 'http://envios.bluemailbox.com.ar/';
+
+    private $config;
+
+    public function __construct(
+        Config $config
+    ) {
+        $this->config = $config;
+    }
+
     public function beforeGetOrderId(\Magento\Sales\Block\Adminhtml\Order\View $subject)
     {
         $order = $subject->getOrder();
 
-        if (str_contains($order->getShippingMethod(), self::code) &&  $order->getShipmentsCollection()->getSize() > 0) {
+        if (str_contains($order->getShippingMethod(), \Mantik\Bluemail\Helper\Config::BLUEMAIL_CODE) &&  $order->getShipmentsCollection()->getSize() > 0) {
             //$shipment = $order->getShipmentsCollection()->getFirstItem()->getShippingLabel();
             $shipment='http://envios.bluemailbox.com.ar/';
             $subject->addButton(
                 'bluemail_pdf',
-                ['label' => __('Print bluemail label'), 'onclick' => "window.open('" . self::URL_PDF . "' , '_blank')"]
+                ['label' => __('Print bluemail label'), 'onclick' => "window.open('" . $this->config->getBlueMailUrl() . "' , '_blank')"]
             );
         }
         return null;

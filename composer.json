@@ -1,8 +1,7 @@
 {
-    "name": "bluemail/magento2-shipping",
-    "description": "Magento 2 integration module with Bluemail Api",
-    "type": "magento2-module",
-    "license": "CC BY-NC-SA 4.0",
+    "name": "mantiktech/magento2-module-bluemail",
+    "description": "Magento 2 integration  with Bluemail Shipping",
+    "license": "OSL-3.0",
     "authors": [
         {
             "email": "info@mantik.tech",
@@ -30,5 +29,18 @@
         "psr-4": {
             "Mantik\\Bluemail\\": ""
         }
-    }
+    },
+    "keywords": [
+        "magento",
+        "magento2",
+        "bluemail",
+        "shiping"
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        }
+    ],
+    "prefer-stable": true
 }
