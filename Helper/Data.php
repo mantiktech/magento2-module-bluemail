@@ -64,13 +64,14 @@ class Data extends AbstractHelper
             if ($this->configHelper->getSizeHeightAttributeId()) {
                 $depth = (float)$product->getResource()->getAttributeRawValue($product->getId(), $this->configHelper->getSizeDepthAttributeId(), $this->storeManager->getStore()->getId());
             }
+            $price = $item->getData('row_total_incl_tax') - $item->getData('discount_amount');
             $package[]=[
                 "weight"=> $this->weightToKg($item->getWeight()),
                 "weightUnit"=> 'KG',
                 "sizeHeight"=> round($height/100, 2),
                 "sizeWidth"=> round($width/100, 2),
                 "sizeDepth"=> round($depth/100, 2),
-                "declaredValue"=> $item->getPrice()*$item->getQty(),
+                "declaredValue"=> $price,
                 "quantity" => $item->getQty()
             ];
         }

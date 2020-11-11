@@ -2,6 +2,7 @@
 namespace Mantik\Bluemail\Plugin\Checkout\Block\Checkout;
 class LayoutProcessor
 {
+
     public function afterProcess(
         \Magento\Checkout\Block\Checkout\LayoutProcessor $subject,
         array  $jsLayout

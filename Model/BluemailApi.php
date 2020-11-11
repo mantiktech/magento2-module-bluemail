@@ -12,8 +12,10 @@ use GuzzleHttp\ClientFactory;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\ResponseFactory;
+use Magento\Framework\Message\ManagerInterface;
 use Magento\Framework\Webapi\Rest\Request;
 use Mantik\Bluemail\Helper\Config;
+use Mantik\Bluemail\Helper\Debug;
 
 /**
  * Class BluemailApi
@@ -62,7 +64,17 @@ abstract class BluemailApi
      */
     protected $status;
 
-    private $logger;
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * @var Debug
+     */
+    protected $debug;
+
+    protected $messageManager;
 
     /**
      * BluemailApi constructor.
@@ -70,17 +82,24 @@ abstract class BluemailApi
      * @param ResponseFactory $responseFactory
      * @param Config $configHelper
      * @param \Psr\Log\LoggerInterface $logger
+     * @param ManagerInterface $messageManager
+     * @param Debug $debug
      */
     public function __construct(
         ClientFactory $clientFactory,
         ResponseFactory $responseFactory,
         Config $configHelper,
-        \Psr\Log\LoggerInterface $logger
+        \Psr\Log\LoggerInterface $logger,
+        ManagerInterface $messageManager,
+        Debug $debug
     ) {
         $this->clientFactory = $clientFactory;
         $this->responseFactory = $responseFactory;
         $this->configHelper = $configHelper;
         $this->logger = $logger;
+        $this->debug = $debug;
+        $this->messageManager = $messageManager;
+
         $this->headers = [];
         $this->bodyParam = [];
     }
@@ -121,7 +140,8 @@ abstract class BluemailApi
                 'config' => [ 'base_uri' => $this->configHelper->getApiUrl() ]
             ]
         );
-        $this->logger->info(print_r($params, true));
+        $this->debug->log($params, 'request');
+
         try {
             $response = $client->request(
                 $requestMethod,
@@ -131,7 +151,7 @@ abstract class BluemailApi
             $this->setStatus($response->getStatusCode());
             $responseBody = $response->getBody();
             $this->response = $responseBody->getContents();
-            $this->logger->info($this->response);
+            $this->debug->log($this->response, 'response');
         } catch (GuzzleException $exception) {
             /** @var Response $response */
             $response = $this->responseFactory->create([
@@ -139,6 +159,9 @@ abstract class BluemailApi
                 'reason' => $exception->getMessage()
             ]);
             $this->logger->error($exception->getMessage());
+            $this->debug->log($exception->getMessage(), 'error');
+            $this->messageManager->addErrorMessage($exception->getMessage());
+
         }
 
         return $response;
