@@ -9,6 +9,7 @@ namespace Mantik\Bluemail\Block\Adminhtml\Region;
 
 use Magento\Backend\Block\Widget\Context;
 use Magento\Backend\Block\Widget\Form\Container;
+use Magento\Directory\Model\ResourceModel\Region\CollectionFactory as RegionCollectionFactory;
 
 /**
  * Class FormContainer
@@ -16,6 +17,17 @@ use Magento\Backend\Block\Widget\Form\Container;
  */
 class Edit extends Container
 {
+    protected $regionCollectionFactory;
+
+    public function __construct(
+        Context $context,
+        array $data = [],
+        RegionCollectionFactory $regionCollectionFactory
+    ) {
+        $this->regionCollectionFactory = $regionCollectionFactory;
+        parent::__construct($context, $data);
+    }
+
     /**
      * Initialize form.
      *
@@ -32,16 +44,18 @@ class Edit extends Container
         $this->removeButton('reset');
         $this->removeButton('delete');
 
-        $this->addButton(
-            'import',
-            [
-                'label' => __('Import Regions'),
-                'class' => 'delete',
-                'onclick' => 'deleteConfirm(\'' . __(
-                    'Are you sure you want to do this?'
-                ) . '\', \'' . $this->getImportUrl() . '\', {data: {}})'
-            ]
-        );
+        if (!$this->hasArRegion()) {
+            $this->addButton(
+                'import',
+                [
+                    'label' => __('Import Regions'),
+                    'class' => 'delete',
+                    'onclick' => 'deleteConfirm(\'' . __(
+                        'Are you sure you want to do this?'
+                    ) . '\', \'' . $this->getImportUrl() . '\', {data: {}})'
+                ]
+            );
+        }
     }
 
     /**
@@ -62,5 +76,15 @@ class Edit extends Container
     public function getImportUrl()
     {
         return $this->getUrl('bluemail/region/import');
+    }
+
+    private function hasArRegion()
+    {
+        $regionCollection = $this->regionCollectionFactory->create();
+        $regionCollection->addFieldToFilter(
+            'country_id',
+            'AR'
+        ); //TODO maybe make it an option, at least some class constant?
+        return $regionCollection->count() > 0;
     }
 }

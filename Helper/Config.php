@@ -21,11 +21,15 @@ class Config extends AbstractHelper
     /**
      * Common Constants
      */
+    const BLUEMAIL_CODE = 'bluemail';
+    const BLUEMAIL_URL = 'https://envios.bluemail.com.ar/';
+    const BLUEMAIL_URL_SANDBOX = 'http://envios.bluemailbox.com.ar/';
     const SECTION = 'carriers/';
     const GROUP = 'bluemail/';
     const DEFAULT_COUNTRY = '23';
     const API_REQUEST_ORIGEN_ID = '6';
     const API_REQUEST_FROM_TYPE = 'CLIENT';
+
     /**
      * Databse paths
      */
@@ -54,7 +58,6 @@ class Config extends AbstractHelper
     const CONFIG_WEIGHT_UNIT_ID = self::SECTION . self::GROUP . 'weightunit';
 
     const CONFIG_COUNTRY_RESTRICTION = self::SECTION . self::GROUP . 'sallowspecific';
-
 
     /**
      * @param Context $context
@@ -233,6 +236,14 @@ class Config extends AbstractHelper
         return $this->getConfigValue(self::CONFIG_DEBUGGER_ENABLED);
     }
 
+    public function getBlueMailUrl()
+    {
+        if ($this->getSandboxState()) {
+            return self::BLUEMAIL_URL_SANDBOX;
+        } else {
+            return self::BLUEMAIL_URL;
+        }
+    }
     /**
      * Return specific config value based on path
      *

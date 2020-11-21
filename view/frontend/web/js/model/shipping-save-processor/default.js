@@ -1,6 +1,7 @@
 define(
     [
         'jquery',
+        'Magento_Checkout/js/checkout-data',
         'ko',
         'Magento_Checkout/js/model/quote',
         'Magento_Checkout/js/model/resource-url-manager',
@@ -13,6 +14,7 @@ define(
     ],
     function (
         $,
+        checkoutData,
         ko,
         quote,
         resourceUrlManager,
@@ -24,6 +26,8 @@ define(
         selectBillingAddressAction
     ) {
         'use strict';
+
+
         $(document).on("click", '#checkout-shipping-method-load tr.row', function() {
 
             if($(this).find('.radio').val().indexOf('bluemail')!=-1){
@@ -32,7 +36,6 @@ define(
                 $('[name="shippingAddress.custom_attributes.bluemail_notes"]').css('display','none');
             }
         });
-
         return {
             saveShippingInformation: function () {
                 var payload;
