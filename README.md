@@ -2,12 +2,12 @@
 
 ## Requerimientos
 - PHP **7.X**
-- Magento **2.3.X** **2.4.X**
+- Compatible con Magento **2.3.X**, **2.4.X**
 
 ## Instalacion 
 
 ```
-composer require mantiktech/magento2-module-bluemail`
+composer require mantiktech/magento2-module-bluemail
 bin/magento module:enable
 bin/magento setup:upgrade
 bin/magento setup:di:compile
