@@ -1,7 +1,29 @@
 # Bluemail para Magento 2
 
-![Packagist License](https://img.shields.io/packagist/l/bluemail/magento2-shipping?style=flat-square)
-![Packagist Version](https://img.shields.io/packagist/v/bluemail/magento2-shipping?style=flat-square)
+## Requerimientos
+- PHP **7.X**
+- Compatible con Magento **2.3.X**, **2.4.X**
+
+## Instalacion 
+
+```
+composer require mantiktech/magento2-module-bluemail
+bin/magento module:enable
+bin/magento setup:upgrade
+bin/magento setup:di:compile
+bin/magento setup:static-content:deploy
+```
+
+## Actualización 
+
+Para actualizar el modulo a la ultima version (dependiendo de tu `composer.json`), ejecutar los siguientes comandos:
+
+```
+composer update mantiktech/magento2-module-bluemail
+php bin/magento setup:di:compile
+php bin/magento setup:upgrade
+php bin/magento setup:static-content:deploy
+```
 
 ## Modulo de integraci&oacute;n de la API de Bluemail con Magento 2. 
 
