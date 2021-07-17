@@ -16,8 +16,8 @@
 				<token/>
 				<customerid/>
 				<sandboxmode/>
-                <sandboxapiurl>https://api-test.bluemailbox.com.ar/v1/</sandboxapiurl>
-                <productionapiurl>https://api.bluemailbox.com.ar/v1/</productionapiurl>
+                <sandboxapiurl>https://api-test.bluemail.com.ar/v1/</sandboxapiurl>
+                <productionapiurl>https://api.bluemail.com.ar/v1/</productionapiurl>
                 <deliverytype/>
                 <depositid/>
                 <ivacalculate/>

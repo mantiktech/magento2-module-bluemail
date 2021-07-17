@@ -23,7 +23,7 @@ class Config extends AbstractHelper
      */
     const BLUEMAIL_CODE = 'bluemail';
     const BLUEMAIL_URL = 'https://envios.bluemail.com.ar/';
-    const BLUEMAIL_URL_SANDBOX = 'http://envios.bluemailbox.com.ar/';
+    const BLUEMAIL_URL_SANDBOX = 'http://envios.bluemail.com.ar/';
     const SECTION = 'carriers/';
     const GROUP = 'bluemail/';
     const DEFAULT_COUNTRY = '23';

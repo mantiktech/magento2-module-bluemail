@@ -22,7 +22,7 @@ class View
 
         if (str_contains($order->getShippingMethod(), \Mantik\Bluemail\Helper\Config::BLUEMAIL_CODE) &&  $order->getShipmentsCollection()->getSize() > 0) {
             //$shipment = $order->getShipmentsCollection()->getFirstItem()->getShippingLabel();
-            $shipment='http://envios.bluemailbox.com.ar/';
+            $shipment='http://envios.bluemail.com.ar/';
             $subject->addButton(
                 'bluemail_pdf',
                 ['label' => __('Print bluemail label'), 'onclick' => "window.open('" . $this->config->getBlueMailUrl() . "' , '_blank')"]

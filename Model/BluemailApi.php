@@ -126,6 +126,13 @@ abstract class BluemailApi
         string $requestMethod = Request::HTTP_METHOD_GET,
         bool $includeClientId = true
     ): Response {
+        if(!$this->configHelper->isEnabled()){
+            $response = $this->responseFactory->create([
+                'status' => '401',
+                'reason' => 'module disabled'
+            ]);
+            return $response;
+        }
         $params = [
             'headers' => $this->getHeaders()
         ];
@@ -154,8 +161,12 @@ abstract class BluemailApi
             $this->debug->log($this->response, 'response');
         } catch (GuzzleException $exception) {
             /** @var Response $response */
+            $code = $exception->getCode();
+            if($exception->getCode() < 100 || $exception->getCode() >= 600){
+                $code = 200;
+            }
             $response = $this->responseFactory->create([
-                'status' => $exception->getCode(),
+                'status' => $code,
                 'reason' => $exception->getMessage()
             ]);
             $this->logger->error($exception->getMessage());
