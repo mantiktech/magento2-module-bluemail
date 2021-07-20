@@ -28,7 +28,7 @@ class Estimates extends BluemailApi
         $this->setBodyParams($data);
         $this->doRequest(
             static::API_REQUEST_ENDPOINT,
-            Request::HTTP_METHOD_GET
+            Request::HTTP_METHOD_POST
         );
     }
 }

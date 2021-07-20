@@ -18,8 +18,5 @@
         <constraint xsi:type="unique" referenceId="MAGENTO_REGION_ID">
             <column name="magento_region_id"/>
         </constraint>
-        <constraint xsi:type="unique" referenceId="BLUEMAIL_REGION_ID">
-            <column name="bluemail_region_id"/>
-        </constraint>
     </table>
 </schema>

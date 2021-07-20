@@ -8,8 +8,7 @@
         "constraint": {
             "PRIMARY": true,
             "FK_C951A2C8FC9DBA819EF3A647D4DAFD0F": true,
-            "BLUEMAIL_REGION_LINK_MAGENTO_REGION_ID": true,
-            "BLUEMAIL_REGION_LINK_BLUEMAIL_REGION_ID": true
+            "BLUEMAIL_REGION_LINK_MAGENTO_REGION_ID": true
         }
     }
 }
