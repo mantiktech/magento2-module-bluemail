@@ -4,4 +4,7 @@
     <extension_attributes for="Magento\Checkout\Api\Data\ShippingInformationInterface">
         <attribute code="bluemail_notes" type="string" />
     </extension_attributes>
+    <extension_attributes for="Magento\Quote\Api\Data\AddressInterface">
+        <attribute code="bluemail_notes" type="string" />
+    </extension_attributes>
 </config>
