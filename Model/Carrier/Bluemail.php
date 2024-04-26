@@ -104,16 +104,7 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
         $result = $this->_rateResultFactory->create();
 
         $method = $this->createMethod();
-        if ($request->getFreeShipping() === true) {
-            $method->setCarrier($this->_code);
-            $method->setCarrierTitle($this->getConfigData('name'));
-            $method->setMethodTitle(__('Free shipping'));
-            $method->setMethod($this->_code);
-            $shippingPrice = '0.00';
-            $method->setCost($shippingPrice);
-            $result->append($method);
-        } else {
-            $this->estimates->execute(['destZip'=>$request->getDestPostcode(),
+        $this->estimates->execute(['destZip'=>$request->getDestPostcode(),
                                        'Packages'=> $this->helper->getPackages($request->getAllItems())
                                       ]);
 
@@ -126,13 +117,16 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
                         $method = $this->createMethod();
                         $method->setMethodTitle($item['name']);
                         $method->setMethod($item['code']);
-                        $method->setPrice($item['price']*$iva);
-                        $method->setCost($item['price']*$iva);
+                        if ($request->getFreeShipping() === true) {
+                            $shippingPrice = '0.00';
+                            $method->setPrice($shippingPrice);
+                            $method->setCost($shippingPrice);
+                        }
                         $result->append($method);
                     }
                 }
             }
-        }
+
         return $result;
     }
 
