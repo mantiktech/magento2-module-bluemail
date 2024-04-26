@@ -121,6 +121,9 @@ class Bluemail extends AbstractCarrier implements CarrierInterface
                             $shippingPrice = '0.00';
                             $method->setPrice($shippingPrice);
                             $method->setCost($shippingPrice);
+                        }else{
+                            $method->setPrice($item['price']*$iva);
+                            $method->setCost($item['price']*$iva);
                         }
                         $result->append($method);
                     }
